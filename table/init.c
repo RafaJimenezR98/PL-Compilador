@@ -1,73 +1,50 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "../code/code.h"
+//#include "../code/code.h"
+#include "init.h"
+
 #include "sintactico.tab.h"
 
-/* Prototipo de una nueva funcion matematica */
-extern double integer(double x), Azar();
-/* Prototipos de funciones matematicas que "controlan" posibles errores" */
-extern double Log(double x), Log10(double x), Exp(double x), Sqrt(double x),
-              Atan2(double x, double y);
+/************************************************************************/
+/** Nombre: install                                                    **/
+/** Labor que desarrolla: Inserta una palabra en la tabla de simbolos, **/
+/**        indicando el token que le corresponde y su valor inicial.   **/
+/**        Devuelve un puntero al nodo que contiene a la palabra.      **/
+/** Tipo de resultado: Puntero a la tabla de simbolos "Symbol *"       **/
+/** Parametros:                                                        **/
+/**  Nombre: s                                                         **/
+/**	Tipo:   cadena de caracteres o puntero a char  "char *"        **/
+/**     Mision: suministra el nombre de la palabra a insertar.         **/
+/**  Nombre: t                                                         **/
+/**	Tipo:   entero "int"                                           **/
+/**     Mision: indica el token de la palabra.                         **/
+/**  Nombre: d                                                         **/
+/**	Tipo:   real de doble precision "double"                       **/
+/**     Mision: suministra un valor inicial.                           **/
+/************************************************************************/
+Symbol *install(char *s, int t, double d)
+{
+ Symbol *sp;
+ char *emalloc();
 
-static struct{
-              char *nombre;
-	      double cval;
-	      } constantes[] = {
-	                    "pi",    3.14159265358979323846,
-	                    "e",     2.71828182845904523536,
-	                    "gamma", 0.57721566490153286060,
-	                    "deg",   57.29577951308232087680,
-	                    "phi",   1.61803398874989484820,
-	                    0,       0
-	                   };
+ //guardar el nombre
+ sp=(Symbol *) emalloc(sizeof(Symbol));
+ sp->nombre=emalloc(strlen(s)+1); /* +1 para el caracter nulo '\0' */
+ strcpy(sp->nombre,s);
 
-static struct{   /* palabras clave */
-              char *nombre;
-	      int  kval;
-	      } keywords[] = {
-                  "si",              IF,
-                  "entonces",        THEN,
-			      "si_no",           ELSE,
-                  "fin_si",          END_IF,
-			      "mientras",        WHILE,
-                  "hacer",           DO,
-                  "fin_mientras",    END_WHILE,
-                  "repetir",         REPEAT,
-                  "hasta",           UNTIL,
-                  "para",            FOR,
-                  "desde",           SINCE,
-                  "paso",            PASS,
-                  "fin_para",        END_FOR,
-			      "escribir",        PRINT,
-                  "escribir_cadena", PRINT_STRING,
-                  "leer",            READ,
-                  "leer_cadena",     READ_STRING,
-			      0,           0,
-                             };
+ //guardar tipo
+ sp->tipo=t;
 
-static struct {    /* Nombres predefinidos de funciones */
-	       char *nombre;
-	       double (*func)();
-              } funciones0[] = {
-                               "azar", Azar,
-                                0, 0
-                              },
-                funciones1 [] = {
-	                       "seno",   sin,
-		               "coseno",   cos,
-		               "atan",  atan,
-		               "log",   Log,
-		               "log10", Log10,
-		               "exp",   Exp,
-		               "raiz",  Sqrt,
-		               "entero",   integer,
-		               "abs",   fabs,
-		               0,       0
-		              },
-              funciones2[] = {"atan2", Atan2,
-                               0, 0
-                             };
+ //guardar el numero
+ sp->u.val=d;
+
+ //guardar el siguiente
+ sp->siguiente=symlist;
+ symlist=sp;
+ return sp;
+}
+
 /************************************************************************/
 /** Nombre: init                                                       **/
 /** Labor que desarrolla: Inserta  en la tabla de simbolos las         **/

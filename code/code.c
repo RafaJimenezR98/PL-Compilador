@@ -6,13 +6,13 @@
 #include "code.h"
 #include "sintactico.tab.h"
 
-#include "macros.h"
+#include "../includes/macros.h"
 
 #define NSTACK 256              /* Dimension maxima de la pila */
 static Datum stack[NSTACK];     /* La pila */
 static Datum *stackp;           /* siguiente lugar libre en la pila */
 
-#define NPROG 2000 
+#define NPROG 2000
 Inst prog[NPROG];  /* La maquina */
 Inst *progp;       /* Siguiente lugar libre para la generacion de codigo */
 
@@ -28,50 +28,50 @@ void initcode() /* inicializacion para la generacion de codigo */
 
 void push(Datum d) /* meter d en la pila */
 {
- 
+
  /* Comprobar que hay espacio en la pila para el nuevo valor o variable */
- 
+
  if (stackp >= &stack[NSTACK])
      execerror (" Desborde superior de la pila ", (char *) 0);
- 
+
  *stackp++ =d; /* Apilar la variable o el numero y */
                /* desplazar el puntero actual de la pila */
 }
 
 Datum pop() /* sacar y devolver de la pila el elemento de la cima */
 {
- 
- /* Comprobar que no se intenta leer fuera de la pila */ 
+
+ /* Comprobar que no se intenta leer fuera de la pila */
  /* En teoria no ocurrira nunca */
- 
+
  if (stackp <= stack)
      execerror (" Desborde inferior de la pila ", (char *) 0);
- 
+
  --stackp;          /* Volver hacia atras una posicion en la pila */
  return(*stackp);   /* Devolver variable o numero */
 }
 
 void pop2() /* sacar y  NO devolver el elemento de la cima de la pila */
 {
- 
- /* Comprobar que no se intenta leer fuera de la pila */ 
+
+ /* Comprobar que no se intenta leer fuera de la pila */
  /* En teoria no ocurrira nunca */
- 
+
  if (stackp <= stack)
      execerror (" Desborde inferior de la pila ", (char *) 0);
- 
+
  --stackp;          /* Volver hacia atras una posicion en la pila */
 }
 
 Inst *code(Inst f) /* Instalar una instruccion u operando */
 {
  Inst *oprogp = progp;   /* Puntero auxiliar */
- 
- /* Comprobar que hay espacio en el vector de instrucciones */ 
+
+ /* Comprobar que hay espacio en el vector de instrucciones */
 
  if (progp >= &prog[NPROG])
      execerror (" Programa demasiado grande", (char *) 0);
- 
+
  *progp=f;        /* Asignar la instruccion o el puntero a la estructura */
  progp++;         /* Desplazar una posicion hacia adelante */
  return (oprogp);
@@ -79,10 +79,10 @@ Inst *code(Inst f) /* Instalar una instruccion u operando */
 
 void execute(Inst *p)  /* Ejecucion con la maquina */
 {
- 
- /* El contador de programa pc se inicializa con la primera instruccion a */ 
+
+ /* El contador de programa pc se inicializa con la primera instruccion a */
  /* ejecutar */
- 
+
  for (pc=p; *pc != STOP;   )
     (*(*pc++))();              /* Ejecucion de la instruccion y desplazar */
 }                              /* el contador de programa pc */
@@ -92,7 +92,7 @@ void execute(Inst *p)  /* Ejecucion con la maquina */
 void constpush()  /* meter una constante en la pila */
 {
  Datum d;
- 
+
  d.val= ((Symbol *)*pc++)->u.val;
  push(d);
 }
@@ -126,15 +126,15 @@ void varpush()  /* meter una variable en la pila */
 void dividir() /* dividir los dos valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();      /* Obtener el primer numero  */
  d1=pop();      /* Obtener el segundo numero */
- 
- /* Comprobar si hay division por 0 */ 
- 
+
+ /* Comprobar si hay division por 0 */
+
  if (d2.val == 0.0)
      execerror (" Division por cero ", (char *) 0);
- 
+
  d1.val = d1.val / d2.val;    /* Dividir             */
  push(d1);                    /* Apilar el resultado */
 }
@@ -142,7 +142,7 @@ void dividir() /* dividir los dos valores superiores de la pila */
 void multiplicar() /* multiplicar los dos valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
  d1.val = d1.val * d2.val;   /* Multiplicar               */
@@ -152,7 +152,7 @@ void multiplicar() /* multiplicar los dos valores superiores de la pila */
 void restar()   /* restar los dos valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
  d1.val = d1.val - d2.val;   /* Restar                    */
@@ -162,7 +162,7 @@ void restar()   /* restar los dos valores superiores de la pila */
 void sumar()   /* sumar los dos valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
  d1.val = d1.val + d2.val;   /* Sumar                     */
@@ -172,16 +172,16 @@ void sumar()   /* sumar los dos valores superiores de la pila */
 void potencia()  /* exponenciacion de los valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();                      /* Obtener exponente   */
  d1=pop();                      /* Obtener base        */
- 
+
  if ( (d1.val>=0) || ((int)d2.val == d2.val) )
   {
    d1.val = pow(d1.val,d2.val);   /* Elevar a potencia   */
    push(d1);                      /* Apilar el resultado */
   }
- else 
+ else
   {
    char digitos[20];
    sprintf(digitos,"%lf",d1.val);
@@ -192,17 +192,17 @@ void potencia()  /* exponenciacion de los valores superiores de la pila */
 
 void modulo()  /* resto de la division entera del segundo valor de la pila por el valor de la cima */
 {
- 
+
  Datum d1,d2;
- 
+
  d2=pop();      /* Obtener el divisor */
  d1=pop();      /* Obtener el dividendo */
- 
- /* Comprobar si hay division por 0 */ 
- 
+
+ /* Comprobar si hay division por 0 */
+
  if (d2.val == 0.0)
      execerror (" Division por cero ", (char *) 0);
- 
+
  d1.val = (int) d1.val % (int)  d2.val;  /* Resto */
  push(d1);                               /* Apilar el resultado */
 }
@@ -226,13 +226,13 @@ void div_entera()
 void eval() /* evaluar una variable en la pila */
 {
  Datum d;
- 
+
  d=pop();  /* Obtener variable de la pila */
- 
- /* Si la variable no esta definida */ 
- if (d.sym->tipo == INDEFINIDA) 
+
+ /* Si la variable no esta definida */
+ if (d.sym->tipo == INDEFINIDA)
      execerror (" Variable no definida ", d.sym->nombre);
- 
+
  d.val=d.sym->u.val;  /* Sustituir variable por valor */
  push(d);             /* Apilar valor */
 }
@@ -240,7 +240,7 @@ void eval() /* evaluar una variable en la pila */
 void funcion0() /* evaluar una funcion predefinida sin parametros */
 {
  Datum d;
- 
+
  d.val= (*(double (*)())(*pc++))();
  push(d);
 }
@@ -248,7 +248,7 @@ void funcion0() /* evaluar una funcion predefinida sin parametros */
 void funcion1() /* evaluar una funcion predefinida con un parametro */
 {
  Datum d;
- 
+
  d=pop();  /* Obtener parametro para la funcion */
 
  d.val= (*(double (*)())(*pc++))(d.val);
@@ -258,7 +258,7 @@ void funcion1() /* evaluar una funcion predefinida con un parametro */
 void funcion2() /* evaluar una funcion predefinida con dos parametros */
 {
  Datum d1,d2;
- 
+
  d2=pop();  /* Obtener parametro para la funcion */
  d1=pop();  /* Obtener parametro para la funcion */
 
@@ -266,99 +266,99 @@ void funcion2() /* evaluar una funcion predefinida con dos parametros */
  push(d1);
 }
 /****************************************************************************/
-/****************************************************************************/           
+/****************************************************************************/
 
 void mayor_que()
 {
  Datum d1,d2;
- 
+
  d2=pop();   /* Obtener el primer numero  */
  d1=pop();   /* Obtener el segundo numero */
- 
+
  if (d1.val > d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);  /* Apilar resultado */
 }
 
 void menor_que()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val < d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);    /* Apilar el resultado */
 }
 
 void igual()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val == d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);    /* Apilar resultado */
 }
 
 void mayor_igual()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val >= d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);    /* Apilar resultado */
 }
 
 void menor_igual()
 {
  Datum d1,d2;
- 
+
  d2=pop();     /* Obtener el primer numero  */
  d1=pop();     /* Obtener el segundo numero */
- 
+
  if (d1.val <= d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);     /* Apilar resultado */
 }
 
 void distinto()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val != d2.val)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);    /* Apilar resultado */
 }
 /****************************************************************************/
-/****************************************************************************/    
+/****************************************************************************/
 
 void concatenacion()
 {
@@ -377,7 +377,7 @@ void concatenacion()
 void positivo() /* tomar el valor positivo del elemento superior de la pila */
 {
  Datum d1;
- 
+
  d1=pop();              /* Obtener numero   */
  /* d1.val = + d1.val;*/     /* Aplicar mas    */
  push(d1);              /* Apilar resultado */
@@ -386,7 +386,7 @@ void positivo() /* tomar el valor positivo del elemento superior de la pila */
 void negativo() /* negacion del valor superior de la pila */
 {
  Datum d1;
- 
+
  d1=pop();              /* Obtener numero   */
  d1.val = - d1.val;     /* Aplicar menos    */
  push(d1);              /* Apilar resultado */
@@ -458,18 +458,18 @@ void postdecremento()
   push(d);
 }
 /****************************************************************************/
-/****************************************************************************/    
+/****************************************************************************/
 
 void leervariable() /* Leer una variable numerica por teclado */
 {
  Symbol *variable;
  char c;
 
- variable = (Symbol *)(*pc); 
+ variable = (Symbol *)(*pc);
 
- /* Se comprueba si el identificador es una variable */ 
+ /* Se comprueba si el identificador es una variable */
   if ((variable->tipo == INDEFINIDA) || (variable->tipo == VAR))
-    { 
+    {
     printf("Valor--> ");
     while((c=getchar())=='\n') ;
     ungetc(c,stdin);
@@ -480,18 +480,18 @@ void leervariable() /* Leer una variable numerica por teclado */
    }
  else
      execerror("No es una variable",variable->nombre);
-}       
+}
 
 void leervariable_cadena()
 {
  Symbol *variable;
  char c[1024], aux;
 
- variable = (Symbol *)(*pc); 
+ variable = (Symbol *)(*pc);
 
- /* Se comprueba si el identificador es una variable */ 
+ /* Se comprueba si el identificador es una variable */
   if ((variable->tipo == INDEFINIDA) || (variable->tipo == VAR))
-    { 
+    {
     while ((aux = getchar()) != '\n' && aux != EOF); //Borrar buffer de entrada.
     printf("Cadena--> ");
     fgets(c,1024,stdin);
@@ -507,9 +507,9 @@ void leervariable_cadena()
 void escribir() /* sacar de la pila el valor superior y escribirlo */
 {
  Datum d;
- 
+
  d=pop();  /* Obtener numero */
- 
+
  //printf("\t ---> %.8g\n",d.val);
  printf("%.8g\n",d.val);
 }
@@ -547,7 +547,7 @@ void escribir_cadena()
   printf("\n");
 }
 /****************************************************************************/
-/****************************************************************************/ 
+/****************************************************************************/
 
 void ifcode()
 {
@@ -556,13 +556,13 @@ void ifcode()
 
  execute(savepc+3);   /* Ejecutar condicion */
  d=pop();             /* Obtener resultado de la condicion */
- 
- 
+
+
  /* Si se cumple la condición ejecutar el cuerpo del if */
- 
+
  if(d.val)
    execute(*((Inst **)(savepc)));
- 
+
  /* Si no se cumple la condicion se comprueba si existe parte else   */
  /* Esto se logra ya que la segunda posicion reservada contendria el */
  /* puntero a la primera instruccion del cuerpo del else en caso de  */
@@ -571,11 +571,11 @@ void ifcode()
 
  else if  (*((Inst **)(savepc+1)))  /* parte else */
    execute(*((Inst **)(savepc+1)));
- 
 
- /* Asignar a pc la posicion del vector de instrucciones que contiene */  
- /* la siguiente instruccion a ejecutar */ 
- 
+
+ /* Asignar a pc la posicion del vector de instrucciones que contiene */
+ /* la siguiente instruccion a ejecutar */
+
  pc= *((Inst **)(savepc+2));
 }
 
@@ -585,20 +585,20 @@ void whilecode()
  Inst *savepc = pc;    /* Puntero auxiliar para guardar pc */
 
  execute(savepc+2);    /* Ejecutar codigo de la condicion */
- 
+
  d=pop();    /* Obtener el resultado de la condicion de la pila */
- 
+
  while(d.val)   /* Mientras se cumpla la condicion */
     {
      execute(*((Inst **)(savepc)));   /* Ejecutar codigo */
      execute(savepc+2);               /* Ejecutar condicion */
      d=pop();              /* Obtener el resultado de la condicion */
     }
- 
- /* Asignar a pc la posicion del vector de instrucciones que contiene */  
- /* la siguiente instruccion a ejecutar */ 
- 
- pc= *((Inst **)(savepc+1));  
+
+ /* Asignar a pc la posicion del vector de instrucciones que contiene */
+ /* la siguiente instruccion a ejecutar */
+
+ pc= *((Inst **)(savepc+1));
 }
 
 void repeatcode()
@@ -621,13 +621,13 @@ void forcode()
  Datum d1,d2,d3;
  Inst *savepc = pc;
 
- variable=*((Symbol **)(savepc+4)); 
+ variable=*((Symbol **)(savepc+4));
  variable->tipo=VAR;
 
  execute(savepc+5);
  d1=pop();
 
- execute(*((Inst **)(savepc)));  
+ execute(*((Inst **)(savepc)));
  d2=pop();
 
  execute(*((Inst **)(savepc+1)));
@@ -641,7 +641,7 @@ void forcode()
  pc= *((Inst **)(savepc+3));
 }
 /****************************************************************************/
-/****************************************************************************/ 
+/****************************************************************************/
 
 void borrar()
 {
@@ -659,16 +659,16 @@ void lugar()
   LUGAR((int)d1.val,(int)d2.val);
 }
 /****************************************************************************/
-/****************************************************************************/ 
+/****************************************************************************/
 
 void assign() /* asignar el valor superior al siguiente valor */
 {
  Datum d1,d2;
  d1=pop();    /* Obtener variable */
  d2=pop();    /* Obtener numero   */
- 
+
  if (d1.sym->tipo != VAR && d1.sym->tipo != INDEFINIDA)
-   execerror(" asignacion a un elemento que no es una variable ", 
+   execerror(" asignacion a un elemento que no es una variable ",
 	     d1.sym->nombre);
   d1.sym->u.cadena=d2.cadena;
   d1.sym->u.val=d2.val;   /* Asignar valor   */
@@ -681,14 +681,14 @@ void add()
  Datum d1,d2;
  d1=pop();    /* Obtener variable */
  d2=pop();    /* Obtener numero   */
- 
+
  if (d1.sym->tipo != VAR && d1.sym->tipo != INDEFINIDA)
    execerror(" asignacion a un elemento que no es una variable ", d1.sym->nombre);
 
   d1.sym->u.val=d1.sym->u.val + d2.val;   /* Asignar valor   */
   d1.sym->tipo=VAR;
 
-  d2.val = d1.sym->u.val; 
+  d2.val = d1.sym->u.val;
 
   push(d2);               /* Apilar variable */
 }
@@ -698,14 +698,14 @@ void substract()
  Datum d1,d2;
  d1=pop();    /* Obtener variable */
  d2=pop();    /* Obtener numero   */
- 
+
  if (d1.sym->tipo != VAR && d1.sym->tipo != INDEFINIDA)
    execerror(" asignacion a un elemento que no es una variable ", d1.sym->nombre);
 
   d1.sym->u.val=d1.sym->u.val - d2.val;   /* Asignar valor   */
   d1.sym->tipo=VAR;
 
-  d2.val = d1.sym->u.val; 
+  d2.val = d1.sym->u.val;
 
   push(d2);               /* Apilar variable */
 }
@@ -715,16 +715,16 @@ void multiply()
  Datum d1,d2;
  d1=pop();    /* Obtener variable */
  d2=pop();    /* Obtener numero   */
- 
+
  if (d1.sym->tipo != VAR && d1.sym->tipo != INDEFINIDA)
    execerror(" asignacion a un elemento que no es una variable ", d1.sym->nombre);
 
   d1.sym->u.val=d1.sym->u.val * d2.val;   /* Asignar valor   */
   d1.sym->tipo=VAR;
 
-  d2.val = d1.sym->u.val; 
-  
-  push(d2); 
+  d2.val = d1.sym->u.val;
+
+  push(d2);
 }
 
 void divide()
@@ -732,19 +732,19 @@ void divide()
  Datum d1,d2;
  d1=pop();    /* Obtener variable */
  d2=pop();    /* Obtener numero   */
- 
+
  if (d1.sym->tipo != VAR && d1.sym->tipo != INDEFINIDA)
    execerror(" asignacion a un elemento que no es una variable ", d1.sym->nombre);
-    
+
   if (d2.val == 0.0)
     execerror (" Division por cero ", (char *) 0);
 
   d1.sym->u.val=d1.sym->u.val / d2.val;   /* Asignar valor   */
   d1.sym->tipo=VAR;
 
-  d2.val = d1.sym->u.val; 
+  d2.val = d1.sym->u.val;
 
-  push(d2); 
+  push(d2);
 }
 /****************************************************************************/
 /****************************************************************************/
@@ -752,43 +752,43 @@ void divide()
 void o_logico()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val==1 || d2.val==1)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);    /* Apilar resultado */
 }
 
 void y_logico()
 {
  Datum d1,d2;
- 
+
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
- 
+
  if (d1.val==1 && d2.val==1)
    d1.val= 1;
- else 
+ else
    d1.val=0;
- 
+
  push(d1);    /* Apilar el resultado */
 }
 
 void negacion()
 {
  Datum d1;
- 
+
  d1=pop();   /* Obtener numero */
- 
+
  if (d1.val==0)
    d1.val= 1;
  else
    d1.val=0;
- 
+
  push(d1);   /* Apilar resultado */
 }
