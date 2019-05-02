@@ -1,0 +1,66 @@
+escribir_cadena('Ejemplo1: 104 _mod 10');
+
+a:=104_mod10;
+escribir(a);
+
+escribir_cadena('\nEjemplo2: 103 _div 10');
+
+a:=103_div10;
+escribir(a);
+
+escribir_cadena('\nEjemplo3: _no 3');
+
+a:=_no 3;
+escribir(a);
+
+escribir_cadena('\nEjemplo4: leer(a)');
+
+leer(a);
+escribir(a);
+
+escribir_cadena('\nEjemplo5: leer_cadena(a)');
+
+leer_cadena(a);
+escribir_cadena(a);
+escribir_cadena('\n');
+
+escribir_cadena('\nEjemplo6: si');
+
+a:=3;
+si (a<4) 
+entonces
+ escribir(a);
+si_no
+ escribir(_no a);
+fin_si;
+
+escribir_cadena('\nEjemplo7: mientras');
+
+a:=0;
+mientras(a<5)
+hacer
+ escribir(a);
+ a:=a+1;
+fin_mientras;
+
+escribir_cadena('\nEjemplo8: repetir');
+
+a:=5;
+repetir
+ escribir(a);
+ a:=a-1;
+hasta(a<1);
+
+escribir_cadena('\nEjemplo8: para');
+
+para i desde 0 hasta 10 paso 2
+hacer
+ escribir(i);
+fin_para;
+
+escribir_cadena('\nEjemplo9: concatenacion');
+
+a:='hola';
+b:='jose';
+
+escribir_cadena(a || ' ' || b);

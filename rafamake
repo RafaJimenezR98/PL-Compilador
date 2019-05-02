@@ -1,0 +1,40 @@
+FUENTE = sintactico
+LEXICO = lexico
+EJECUTABLE = ipe
+
+CC = gcc
+CFLAGS = -c -g -Wall -ansi
+YFLAGS = -d         # Generar el fichero $(FUENTE).tab.h 
+LFLAGS = -lm -ll   # fl: biblioteca de flex; m: biblioteca matemática  
+OBJS= $(FUENTE).tab.o lex.yy.o  init.o symbol.o  code.o math.o
+
+ipe.exe: $(OBJS) 
+	$(CC) $(OBJS) $(LFLAGS) -o $(EJECUTABLE).exe
+
+code.o:  code.c code.h
+	$(CC) -c code.c
+
+math.o: math.c
+	$(CC) -c math.c
+
+init.o:  init.c code.h $(FUENTE).tab.h
+	$(CC) -c init.c
+
+symbol.o:  symbol.c code.h $(FUENTE).tab.h
+	$(CC) -c symbol.c
+
+lex.yy.o:  lex.yy.c $(FUENTE).tab.h code.h macros.h
+	$(CC) -c lex.yy.c
+
+lex.yy.c: $(LEXICO).l $(FUENTE).tab.h code.h macros.h
+	flex $(LEXICO).l
+
+$(FUENTE).tab.o:  $(FUENTE).tab.c $(FUENTE).tab.h code.h
+	$(CC) -c $(FUENTE).tab.c
+
+$(FUENTE).tab.c $(FUENTE).tab.h:  $(FUENTE).y code.h 
+	bison $(YFLAGS) $(FUENTE).y
+
+#Opcion para borrar los ficheros objetos y auxiliares
+clean: 
+	rm -f  $(OBJS) $(FUENTE).tab.[ch] lex.yy.c $(EJECUTABLE).exe $(FUENTE).output
