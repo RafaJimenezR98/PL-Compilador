@@ -42,7 +42,7 @@
 extern lp::Table table; //!< External Table of Symbols
 /*********************************************/
 
-extern int lineno; //!< External line counter
+extern int lineNumber; //!< External line counter
 
 %}
 
@@ -77,72 +77,56 @@ borrar (?i:_borrar)
 lugar (?i:_lugar)
 rand  (?i:_rand)
 
-//cadena "'"([^']|\\\')*"'"
+/* cadena "'"([^']|\\\')*"'" */
 
 %x ESTADO_COMENTARIO
 
 %%
 
-{modulo} {return MODULO;}
-{division_entera} {return DIVISION_ENTERA;}
-{o_logico} {return O_LOGICO;}
-{y_logico} {return Y_LOGICO;}
-{negacion} {return NEGACION;}
-{borrar} {return BORRAR;}
-{lugar} {return LUGAR;}
-{rand}  {return RAND;}
-
-{numero}+\.?|{numero}*\.{numero}+ {double d;
-                                   sscanf(yytext,"%lf",&d);
-                                 /* Instala el numero en la tabla de simbolos */
-				   yylval.sym=install("",NUMBER,d);
-				   return NUMBER;}
-
-{identificador_mal_escrito6} {execerror("identificador mal escrito. No empieza por una letra, tiene varias _ seguidas y termina en _", yytext);}
-{identificador_mal_escrito5} {execerror("identificador mal escrito. Varias _ seguidas y termina en _", yytext);}
-{identificador_mal_escrito4} {execerror("identificador mal escrito. No empieza por una letra y tiene varias _ seguidas", yytext);}
-{identificador_mal_escrito8} {execerror("identificador mal escrito. No empieza por una letra y termina en _", yytext);}
-{identificador_mal_escrito3} {execerror("identificador mal escrito. Termina en _", yytext);}
-{identificador_mal_escrito2} {execerror("identificador mal escrito. No empieza por una letra", yytext);}
-{identificador_mal_escrito1} {execerror("identificador mal escrito. Varias _ seguidas", yytext);}
-{identificador_mal_escrito7} {execerror("identificador mal escrito. Solo se escribe _", yytext);}
-
-{identificador} { Symbol *s;
-                   for(int i=0; i<strlen(yytext); i++){
-                     yytext[i] = tolower(yytext[i]);
-                   }
-
-                   if ((s=lookup(yytext)) == 0)
-                               s = install (yytext, INDEFINIDA, 0.0);
-                    yylval.sym = s;
-                    return s->tipo == INDEFINIDA ? VAR : s->tipo;}
-
-/* NEW in example 3 */
-/* STATE  */
 %x ERROR
 
-/*! \name REGULAR EXPRESSIONS  */
 %%
 
-[ \t] 	{ ; }    /* skip white space and tabular */
+{modulo}     {
+   return MODULO;
+}
+{division_entera}     {
+   return DIVISION_ENTERA;
+}
+{o_logico}     {
+   return O_LOGICO;
+}
+{y_logico}     {
+   return Y_LOGICO;
+}
+{negacion}     {
+   return NEGACION;
+}
+{borrar}     {
+   return BORRAR;
+}
+{lugar}     {
+   return LUGAR;
+}
+{rand}      {
+   return RAND;
+}
+
+[ \t] 	{ ; }
 
 \n      {
-			/* Line counter */
-           	lineNumber++;
 
-			/* MODIFIED in example 3 */
-			/* COMMENTED in example 5 */
-        	/* return NEWLINE; */
-        }
+  lineNumber++;
+}
 
 ";"		{
-			/* NEW in example 5 */
+
 			return SEMICOLON;
 		}
 
 
 ","		{
-			/* NEW in example 14 */
+
 			return COMMA;
 		}
 
@@ -200,34 +184,68 @@ rand  (?i:_rand)
 							}
                      }
 
-"-:=" {return SUBSTRACT;}
-"+:=" {return ADD;}
-"*:=" {return MULTIPLY;}
-"/:=" {return DIVIDE;}
+"-:=" {
+   return SUBSTRACT;
+}
+"+:=" {
+   return ADD;
+}
+"*:=" {
+   return MULTIPLY;
+}
+"/:=" {
+   return DIVIDE;
+}
 
-"||"      {return CONCATENACION;}
+"||"      {
+   return CONCATENACION;
+}
 
-">="	{return MAYOR_IGUAL;}
-">"	{return MAYOR_QUE;}
-"<="	{return MENOR_IGUAL;}
-"<"	{return MENOR_QUE;}
-"="	{return IGUAL;}
-"<>"	{return DISTINTO;}
+">="	{
+   return MAYOR_IGUAL;
+}
+">"	{
+   return MAYOR_QUE;
+}
+"<="	{
+   return MENOR_IGUAL;
+}
+"<"	{
+   return MENOR_QUE;
+}
+"="	{
+   return IGUAL;
+}
+"<>"	{
+   return DISTINTO;
+}
 
 "("     { return LPAREN; } 			/* NEW in example 3 */
 ")"	    { return RPAREN; } 			/* NEW in example 3 */
 
-"++" {return INCREMENTO;}
-"--" {return DECREMENTO;}
+"++" {
+   return INCREMENTO;
+}
+"--" {
+   return DECREMENTO;
+}
 
 "@".*$ { }
-"#" {BEGIN ESTADO_COMENTARIO;}
-<ESTADO_COMENTARIO>"#" {BEGIN 0;}
-<ESTADO_COMENTARIO>. { }
-<ESTADO_COMENTARIO>[\n] {lineno++;}
+"#" {
+   BEGIN ESTADO_COMENTARIO;
+}
 
-\n      {lineno++;} /* no se devuelve nada, contin�a el analisis l�xico */
-.       {return yytext[0];}
+<ESTADO_COMENTARIO>"#" {
+   BEGIN 0;
+}
+<ESTADO_COMENTARIO>. { }
+<ESTADO_COMENTARIO>[\n] {
+   lineNumber++;
+}
+
+.       {
+   return yytext[0];
+}
 
 
 "_mod"		{ return MODULO; }
@@ -264,13 +282,13 @@ rand  (?i:_rand)
 
 
 ^# { /* The interpreter finishes when the symbol # is written at the beginning of the line */
-	// std::cout << CLEAR_SCREEN;
-	//  PLACE(24,10);
+	/* std::cout << CLEAR_SCREEN; */
+	/*  PLACE(24,10); */
   	  std::cout <<  BIYELLOW;
    	  std::cout <<  ">>>>>>> End of program <<<<<<<";
  	  std::cout << std::endl;
    	  std::cout << RESET;
-	 // PLACE(25,1);
+	 /* PLACE(25,1); */
 
   	  return 0;
 	}

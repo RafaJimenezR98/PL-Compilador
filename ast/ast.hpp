@@ -1583,37 +1583,37 @@ class IfStmt : public Statement
 {
  private:
   ExpNode *_cond; //!< Condicion of the if statement
-  Statement *_stmt1; //!< Statement of the consequent
-  Statement *_stmt2; //!< Statement of the alternative
+  //Statement *_stmt1; //!< Statement of the consequent
+  //Statement *_stmt2; //!< Statement of the alternative
+
+  std::list<lp::Statement *> *_statements1;//!< List of Statements 1
+  std::list<lp::Statement *> *_statements2;//!< List of Statements 2
 
   public:
-/*!
-	\brief Constructor of Single IfStmt (without alternative)
-	\param condition: ExpNode of the condition
-	\param statement1: Statement of the consequent
-	\post  A new IfStmt is created with the parameters
-*/
-  IfStmt(ExpNode *condition, Statement *statement1)
-	{
-		this->_cond = condition;
-		this->_stmt1 = statement1;
-		this->_stmt2 = NULL;
-	}
 
+   /*!
+   	\brief Constructor of Compound IfStmt (with alternative)
+   	\param condition: ExpNode of the condition
+   	\param statemenList: List of Statements
+   */
+   IfStmt(ExpNode *condition, std::list<lp::Statement *> * statementList): _statements1 (statementList)
+ 	{
+ 		this->_cond = condition;
+ 		//this->_statements1 = statementList;
+ 	}
 
-/*!
-	\brief Constructor of Compound IfStmt (with alternative)
-	\param condition: ExpNode of the condition
-	\param statement1: Statement of the consequent
-	\param statement2: Statement of the alternative
-	\post  A new IfStmt is created with the parameters
-*/
-  IfStmt(ExpNode *condition, Statement *statement1, Statement *statement2)
-	{
-		this->_cond = condition;
-		this->_stmt1 = statement1;
-		this->_stmt2 = statement2;
-	}
+   /*!
+   	\brief Constructor of Compound IfStmt (with alternative)
+   	\param condition: ExpNode of the condition
+   	\param statemenList1: List of Statements 1
+      \param statemenList2: List of Statements 2
+   */
+   IfStmt(ExpNode *condition, std::list<lp::Statement *> * statementList1, std::list<lp::Statement *> * statementList2) : _statements1 (statementList1), _statements2 (statementList2)
+ 	{
+ 		this->_cond = condition;
+ 		//this->_statements1 = statementList1;
+      //this->_statements2 = statementList2;
+ 	}
 
 
 /*!
@@ -1649,7 +1649,9 @@ class WhileStmt : public Statement
 {
  private:
   ExpNode *_cond; //!< Condicion of the while statement
-  Statement *_stmt; //!< Statement of the body of the while loop
+  //Statement *_stmt; //!< Statement of the body of the while loop
+
+  std::list<lp::Statement *> *_statements1;//!< List of Statements 1
 
   public:
 /*!
@@ -1658,11 +1660,16 @@ class WhileStmt : public Statement
 	\param statement: Statement of the body of the loop
 	\post  A new WhileStmt is created with the parameters
 */
-  WhileStmt(ExpNode *condition, Statement *statement)
-	{
-		this->_cond = condition;
-		this->_stmt = statement;
-	}
+  /*!
+     \brief Constructor of Compound IfStmt (with alternative)
+     \param condition: ExpNode of the condition
+     \param statemenList: List of Statements
+  */
+  WhileStmt(ExpNode *condition, std::list<lp::Statement *> * statementList): _statements1 (statementList)
+  {
+     this->_cond = condition;
+     //this->_statements1 = statementList;
+  }
 
 
 /*!
