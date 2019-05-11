@@ -92,7 +92,7 @@ builtinParameter2.o: builtinParameter2.cpp builtinParameter2.hpp builtin.hpp sym
 #######################################################
 # NEW in example 10
 # Initialization of the table of symbols.
-init.o: init.c $(NAME).hpp ../parser/interpreter.tab.h
+init.o: init.cpp $(NAME).hpp ../parser/interpreter.tab.h
 	@echo "Compiling " $<
 	@$(CPP) $(CFLAGS) $<
 

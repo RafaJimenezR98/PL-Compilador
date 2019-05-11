@@ -86,6 +86,8 @@ static struct {
           "desde",           SINCE,
           "paso",            PASS,
           "fin_para",        END_FOR,
+          "_borrar",         BORRAR,
+          "_lugar",          LUGAR,
     "escribir",        PRINT,
           "escribir_cadena", PRINT_STRING,
           "leer",            READ,

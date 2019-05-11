@@ -1014,7 +1014,7 @@ void lp::AssignmentStmt::evaluate()
 					// Insert the variable in the table of symbols as NumericVariable
 					// with the type NUMBER and the value
 					lp::NumericVariable *v = new lp::NumericVariable(this->_id,
-											VARIABLE,NUMBER,value);
+											VAR,NUMBER,value);
 					table.installSymbol(v);
 				}
 			}
@@ -1043,7 +1043,7 @@ void lp::AssignmentStmt::evaluate()
 					// Insert the variable in the table of symbols as NumericVariable
 					// with the type BOOL and the value
 					lp::LogicalVariable *v = new lp::LogicalVariable(this->_id,
-											VARIABLE,BOOL,value);
+											VAR,BOOL,value);
 					table.installSymbol(v);
 				}
 			}
@@ -1096,7 +1096,7 @@ void lp::AssignmentStmt::evaluate()
 					// Insert the first variable in the table of symbols as NumericVariable
 					// with the type NUMBER and the value of the previous variable
 					lp::NumericVariable *firstVar = new lp::NumericVariable(this->_id,
-											VARIABLE,NUMBER,secondVar->getValue());
+											VAR,NUMBER,secondVar->getValue());
 					table.installSymbol(firstVar);
 				}
 			}
@@ -1127,7 +1127,7 @@ void lp::AssignmentStmt::evaluate()
 					// Insert the first variable in the table of symbols as NumericVariable
 					// with the type BOOL and the value of the previous variable
 					lp::LogicalVariable *firstVar = new lp::LogicalVariable(this->_id,
-											VARIABLE,BOOL,secondVar->getValue());
+											VAR,BOOL,secondVar->getValue());
 					table.installSymbol(firstVar);
 				}
 			}
@@ -1217,7 +1217,7 @@ void lp::ReadStmt::evaluate()
 			// Insert $1 in the table of symbols as NumericVariable
 		// with the type NUMBER and the read value
 		lp::NumericVariable *n = new lp::NumericVariable(this->_id,
-									  VARIABLE,NUMBER,value);
+									  VAR,NUMBER,value);
 
 		table.installSymbol(n);
 	}
@@ -1249,13 +1249,14 @@ void lp::IfStmt::print()
   this->_cond->print();
 
   // Consequent
-	for (std::list<lp::Statement>::iterator it = this->_statements1.begin(); it != _statements1.end(); it++){
-		it->print();
+  std::list<lp::Statement *>::iterator it;
+	for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+		(*it)->print();
 	}
 
-	if(!this->statements2.empty()){
-		for (std::list<lp::Statement>::iterator it = this->_statements2.begin(); it != _statements2.end(); it++){
-			it->print();
+	if(!this->_statements2->empty()){
+		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
+			(*it)->print();
 		}
 	}
 
@@ -1267,13 +1268,16 @@ void lp::IfStmt::print()
 void lp::IfStmt::evaluate()
 {
    // If the condition is true,
-	if (this->_cond->evaluateBool() == true )
-     // the consequent is run
-	  this->_stmt1->evaluate();
+	std::list<lp::Statement *>::iterator it;
+ 	for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+ 		(*it)->evaluate();
+ 	}
 
-    // Otherwise, the alternative is run if exists
-	else if (this->_stmt2 != NULL)
-		  this->_stmt2->evaluate();
+ 	if(!this->_statements2->empty()){
+ 		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
+ 			(*it)->evaluate();
+ 		}
+ 	}
 }
 
 
@@ -1290,7 +1294,10 @@ void lp::WhileStmt::print()
   this->_cond->print();
 
   // Body of the while loop
-  this->_stmt->print();
+  std::list<lp::Statement *>::iterator it;
+  for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+	  (*it)->print();
+  }
 
   std::cout << std::endl;
 }
@@ -1301,7 +1308,10 @@ void lp::WhileStmt::evaluate()
   // While the condition is true. the body is run
   while (this->_cond->evaluateBool() == true)
   {
-	  this->_stmt->evaluate();
+	  std::list<lp::Statement *>::iterator it;
+	  for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+		  (*it)->evaluate();
+	  }
   }
 
 }

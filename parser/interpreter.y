@@ -191,7 +191,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
              FOR SINCE PASS END_FOR
              PRINT PRINT_STRING READ READ_STRING
              BORRAR LUGAR
-             RAND
+             RAND CONCATENACION
 
 /* Left associativity */
 
@@ -207,10 +207,10 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /*******************************************************/
 
 /* MODIFIED in example 3 */
-%left '+' '-'
+%left SUMA RESTA
 
 /* MODIFIED in example 5 */
-%left '*' '/' MODULO DIVISION_ENTERA
+%left PRODUCTO DIVISION MODULO DIVISION_ENTERA
 
 %left LPAREN RPAREN
 
@@ -388,25 +388,25 @@ exp:	NUMBER
 			$$ = new lp::NumberNode($1);
 		}
 
-	| 	exp '*' exp
+	| 	exp SUMA exp
 		{
 			// Create a new plus node
 			 $$ = new lp::PlusNode($1, $3);
 		 }
 
-	| 	exp '-' exp
+	| 	exp RESTA exp
       	{
 			// Create a new minus node
 			$$ = new lp::MinusNode($1, $3);
 		}
 
-	| 	exp MULTIPLY exp
+	| 	exp PRODUCTO exp
 		{
 			// Create a new multiplication node
 			$$ = new lp::MultiplicationNode($1, $3);
 		}
 
-	| 	exp DIVIDE exp
+	| 	exp DIVISION exp
 		{
 		  // Create a new division node
 		  $$ = new lp::DivisionNode($1, $3);
@@ -418,13 +418,13 @@ exp:	NUMBER
 			$$ = $2;
 		 }
 
-  	| 	ADD exp %prec UNARIO
+  	| 	SUMA exp %prec UNARIO
 		{
 		  // Create a new unary plus node
   		  $$ = new lp::UnaryPlusNode($2);
 		}
 
-	| 	SUBSTRACT exp %prec UNARIO
+	| 	RESTA exp %prec UNARIO
 		{
 		  // Create a new unary minus node
   		  $$ = new lp::UnaryMinusNode($2);

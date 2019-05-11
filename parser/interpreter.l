@@ -58,59 +58,37 @@ numero1 {numero}+\.?
 numero2 {numero}*\.{numero}+
 
 identificador {letra}(_?({letra}|{numero}))*
-identificador_mal_escrito1 {letra}(__+({letra}|{numero}))+
-identificador_mal_escrito2 (_|{numero})(_?({letra}|{numero}))+
-identificador_mal_escrito3 {letra}(_?({letra}|{numero}))*_+
-identificador_mal_escrito4 (_|{numero})+{letra}(__+({letra}|{numero}))+
-identificador_mal_escrito5 {letra}(__+({letra}|{numero}))*_+
-identificador_mal_escrito6 (_|{numero})("__"+({letra}|{numero}))+_+
-identificador_mal_escrito7 _+
-identificador_mal_escrito8 (_|{numero})(_?({letra}|{numero}))+_
 
 /* palabras clave */
-modulo (?i:_mod)
-division_entera (?i:_div)
-o_logico (?i:_o)
-y_logico (?i:_y)
-negacion (?i:_no)
-borrar (?i:_borrar)
-lugar (?i:_lugar)
-rand  (?i:_rand)
 
 /* cadena "'"([^']|\\\')*"'" */
 
-%x ESTADO_COMENTARIO
-
-%%
 
 %x ERROR
 
 %%
 
-{modulo}     {
-   return MODULO;
-}
-{division_entera}     {
-   return DIVISION_ENTERA;
-}
-{o_logico}     {
-   return O_LOGICO;
-}
-{y_logico}     {
-   return Y_LOGICO;
-}
-{negacion}     {
-   return NEGACION;
-}
-{borrar}     {
-   return BORRAR;
-}
-{lugar}     {
-   return LUGAR;
-}
-{rand}      {
-   return RAND;
-}
+"leer"		{ return READ; }
+"leer_cadena"		{ return READ_STRING; }
+
+"escribir"		{ return PRINT; }
+"escribir_cadena"		{ return PRINT_STRING; }
+
+"si"		{ return IF; }
+"entonces"		{ return THEN; }
+"si_no"		{ return ELSE; }
+"fin_si"		{ return END_IF; }
+
+"mientras"   {  return WHILE; }
+"hacer"    {  return DO; }
+"fin_mientras"  {  return END_WHILE;   }
+
+"repetir"    {  return REPEAT;  }
+"hasta"     { return UNTIL;   }
+"para"     {  return FOR;  }
+"fin_para"     { return END_FOR; }
+"desde"     {  return SINCE;   }
+"paso"      { return  PASS;   }
 
 [ \t] 	{ ; }
 
@@ -156,12 +134,12 @@ rand  (?i:_rand)
 								 The identifier is inserted into the symbol table
 								 as undefined Variable with value 0.0
 								*/
-								lp::NumericVariable *n = new lp::NumericVariable(identifier,VARIABLE,UNDEFINED,0.0);
+								lp::NumericVariable *n = new lp::NumericVariable(identifier,VAR,INDEFINIDA,0.0);
 
 								/* A pointer to the new NumericVariable is inserted into the table of symbols */
 								table.installSymbol(n);
 
-								return VARIABLE;
+								return VAR;
 							}
 
 						/* MODIFIED in example 11 */
@@ -197,6 +175,22 @@ rand  (?i:_rand)
    return DIVIDE;
 }
 
+
+
+"+"   {
+   return SUMA;
+}
+"-"  {
+   return RESTA;
+}
+"*"  {
+   return PRODUCTO;
+}
+"/"  {
+   return DIVISION;
+}
+
+
 "||"      {
    return CONCATENACION;
 }
@@ -231,21 +225,6 @@ rand  (?i:_rand)
 }
 
 "@".*$ { }
-"#" {
-   BEGIN ESTADO_COMENTARIO;
-}
-
-<ESTADO_COMENTARIO>"#" {
-   BEGIN 0;
-}
-<ESTADO_COMENTARIO>. { }
-<ESTADO_COMENTARIO>[\n] {
-   lineNumber++;
-}
-
-.       {
-   return yytext[0];
-}
 
 
 "_mod"		{ return MODULO; }
@@ -255,16 +234,8 @@ rand  (?i:_rand)
 "_y"		{ return Y_LOGICO; }
 "_no"		{ return NEGACION; }
 
-"leer"		{ return READ; }
-"leer_cadena"		{ return READ_STRING; }
-
-"escribir"		{ return PRINT; }
-"escribir_cadena"		{ return PRINT_STRING; }
-
-"si"		{ return IF; }
-"entonces"		{ return THEN; }
-"si_no"		{ return ELSE; }
-"fin_si"		{ return END_IF; }
+"_borrar"     { return BORRAR;  }
+"_lugar"      { return LUGAR; }
 
 "**"      {return POTENCIA;}
 
