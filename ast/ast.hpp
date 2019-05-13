@@ -719,6 +719,43 @@ class DivisionNode : public NumericOperatorNode
   double evaluateNumber();
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*!
+  \class   DivisionEnteraNode
+  \brief   Definition of atributes and methods of DivisionEnteraNode class
+  \note    DivisionEnteraNode Class publicly inherits from NumericOperatorNode class
+		   and adds its own print and evaluate functions
+*/
+class DivisionEnteraNode : public NumericOperatorNode
+{
+  public:
+/*!
+	\brief Constructor of DivisionEnteraNode uses NumericOperatorNode's constructor as members initializer
+	\param L: pointer to ExpNode
+	\param R: pointer to ExpNode
+	\post  A new DivisionEnteraNode is created with the parameter
+*/
+  DivisionEnteraNode(ExpNode *L, ExpNode *R): NumericOperatorNode(L,R)
+  {
+		// Empty
+  }
+/*!
+	\brief   Print the DivisionEnteraNode
+	\return  void
+	\sa		 evaluate()
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the DivisionEnteraNode
+	\return  int
+	\sa		 print
+*/
+  double evaluateNumber();
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////

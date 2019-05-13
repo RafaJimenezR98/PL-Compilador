@@ -149,7 +149,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %type <stmts> stmtlist
 
 // New in example 17: if, while, block
-%type <st> stmt asgn print read if while
+%type <st> stmt asgn print read if while dowhile
 
 %type <prog> program
 
@@ -187,7 +187,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %token       FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA
              IF THEN ELSE END_IF
              WHILE DO END_WHILE
-             REPEAT UNTIL
+             REPETIR UNTIL
              FOR SINCE PASS END_FOR
              PRINT PRINT_STRING READ READ_STRING
              BORRAR LUGAR
@@ -300,31 +300,43 @@ stmt: SEMICOLON  /* Empty statement: ";" */
 		// Default action
 		// $$ = $1;
 	 }
+   | dowhile
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
 	/*  NEW in example 17 */
 ;
 
 
 	/*  NEW in example 17 */
 if:	/* Simple conditional statement */
-	IF cond THEN stmtlist
+	IF cond THEN stmtlist END_IF
     {
 		// Create a new if statement node
 		$$ = new lp::IfStmt($2, $4);
 	}
 
 	/* Compound conditional statement */
-	| IF cond stmtlist  ELSE stmtlist
+	| IF cond THEN stmtlist ELSE stmtlist END_IF
 	 {
 		// Create a new if statement node
-		$$ = new lp::IfStmt($2, $3, $5);
+		$$ = new lp::IfStmt($2, $4, $6);
 	 }
 ;
 
 	/*  NEW in example 17 */
-while:  WHILE cond stmtlist
+while:  WHILE cond DO stmtlist END_WHILE
 		{
 			// Create a new while statement node
-			$$ = new lp::WhileStmt($2, $3);
+			$$ = new lp::WhileStmt($2, $4);
+        }
+;
+
+dowhile:  REPETIR stmtlist UNTIL cond
+		{
+			// Create a new while statement node
+			$$ = new lp::WhileStmt($4, $2);
         }
 ;
 
@@ -411,6 +423,12 @@ exp:	NUMBER
 		  // Create a new division node
 		  $$ = new lp::DivisionNode($1, $3);
 	   }
+
+  | 	exp DIVISION_ENTERA exp
+   	{
+   		 // Create a new division node
+   		 $$ = new lp::DivisionEnteraNode($1, $3);
+   	}
 
 	| 	LPAREN exp RPAREN
        	{

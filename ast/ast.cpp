@@ -479,6 +479,52 @@ double lp::DivisionNode::evaluateNumber()
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void lp::DivisionEnteraNode::print()
+{
+  std::cout << "DivisionEnteraNode: " << std::endl;
+  this->_left->print();
+  std::cout << " _div ";
+  this->_right->print();
+}
+
+double lp::DivisionEnteraNode::evaluateNumber()
+{
+	int result = 0;
+
+	// Ckeck the types of the expressions
+	if (this->getType() == NUMBER)
+	{
+		double leftNumber, rightNumber;
+
+		leftNumber = this->_left->evaluateNumber();
+		rightNumber = this->_right->evaluateNumber();
+
+		// The divisor is not zero
+    	if(std::abs(rightNumber) > ERROR_BOUND)
+		{
+				double aux=0;
+				aux = leftNumber / rightNumber;
+				result = (int)aux;
+				if( (aux-result) > 0.5 ){
+					result++;
+				}
+		}
+		else
+		{
+			warning("Runtime error", "Division by zero");
+		}
+	}
+	else
+	{
+		warning("Runtime error: the expressions are not numeric for", "Division");
+	}
+
+  return result;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1269,12 +1315,12 @@ void lp::IfStmt::evaluate()
 {
    // If the condition is true,
 	std::list<lp::Statement *>::iterator it;
- 	for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+ 	for (it = this->_statements1->begin(); it != this->_statements1->end(); it++){
  		(*it)->evaluate();
  	}
 
  	if(!this->_statements2->empty()){
- 		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
+ 		for (it = this->_statements2->begin(); it != this->_statements2->end(); it++){
  			(*it)->evaluate();
  		}
  	}

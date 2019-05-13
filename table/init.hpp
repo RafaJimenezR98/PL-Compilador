@@ -80,7 +80,7 @@ static struct {
     "mientras",        WHILE,
           "hacer",           DO,
           "fin_mientras",    END_WHILE,
-          "repetir",         REPEAT,
+          "repetir",         REPETIR,
           "hasta",           UNTIL,
           "para",            FOR,
           "desde",           SINCE,

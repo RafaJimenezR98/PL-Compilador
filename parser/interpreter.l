@@ -59,36 +59,79 @@ numero2 {numero}*\.{numero}+
 
 identificador {letra}(_?({letra}|{numero}))*
 
+identificador_mal1 {letra}(__+({letra}|{numero}))+
+identificador_mal2 (_|{numero})(_?({letra}|{numero}))+
+identificador_mal3 {letra}(_?({letra}|{numero}))*_+
+identificador_mal4 (_|{numero})+{letra}(__+({letra}|{numero}))+
+identificador_mal5 {letra}(__+({letra}|{numero}))*_+
+identificador_mal6 (_|{numero})("__"+({letra}|{numero}))+_+
+identificador_mal7 _+
+identificador_mal8 (_|{numero})(_?({letra}|{numero}))+_
+
 /* palabras clave */
 
-/* cadena "'"([^']|\\\')*"'" */
+modulo (?i:_mod)
+division_entera (?i:_div)
+
+o_logico (?i:_o)
+y_logico (?i:_y)
+negacion (?i:_no)
+
+leer (?i:leer)
+leer_cadena (?i:leer_cadena)
+
+escribir (?i:escribir)
+escribir_cadena (?i:escribir_cadena)
+
+si (?i:si)
+entonces (?i:entonces)
+si_no (?i:si_no)
+fin_si (?i:fin_si)
+
+mientras (?i:mientras)
+hacer (?i:hacer)
+fin_mientras (?i:fin_mientras)
+
+repetir (?i:repetir)
+hasta (?i:hasta)
+
+para (?i:para)
+desde (?i:desde)
+/* hasta (?i:hasta) */
+paso (?i:paso)
+fin_para (?i:fin_para)
+
+borrar (?i:_borrar)
+lugar (?i:_lugar)
 
 
 %x ERROR
 
 %%
 
-"leer"		{ return READ; }
-"leer_cadena"		{ return READ_STRING; }
+{leer}		{ return READ; }
+{leer_cadena}		{ return READ_STRING; }
 
-"escribir"		{ return PRINT; }
-"escribir_cadena"		{ return PRINT_STRING; }
+{escribir}		{ return PRINT; }
+{escribir_cadena}		{ return PRINT_STRING; }
 
-"si"		{ return IF; }
-"entonces"		{ return THEN; }
-"si_no"		{ return ELSE; }
-"fin_si"		{ return END_IF; }
+{si}		{ return IF; }
+{entonces}		{ return THEN; }
+{si_no}		{ return ELSE; }
+{fin_si}		{ return END_IF; }
 
-"mientras"   {  return WHILE; }
-"hacer"    {  return DO; }
-"fin_mientras"  {  return END_WHILE;   }
+{mientras}   {  return WHILE; }
+{hacer}    {  return DO; }
+{fin_mientras}  {  return END_WHILE;   }
 
-"repetir"    {  return REPEAT;  }
-"hasta"     { return UNTIL;   }
-"para"     {  return FOR;  }
-"fin_para"     { return END_FOR; }
-"desde"     {  return SINCE;   }
-"paso"      { return  PASS;   }
+{repetir}    {  return REPETIR;  }
+{hasta}     { return UNTIL;   }
+
+{para}     {  return FOR;  }
+{desde}     {  return SINCE;   }
+{fin_para}     { return END_FOR; }
+
+{paso}      { return  PASS;   }
 
 [ \t] 	{ ; }
 
@@ -118,7 +161,8 @@ identificador {letra}(_?({letra}|{numero}))*
 
 
 {identificador}   		 {
-						 /* NEW in example 7 */
+						 /* NEborrar (?i:_borrar)
+lugar (?i:_lugar)W in example 7 */
 						 std::string identifier(yytext);
 
 						/*
@@ -227,15 +271,15 @@ identificador {letra}(_?({letra}|{numero}))*
 "@".*$ { }
 
 
-"_mod"		{ return MODULO; }
-"_div"		{ return DIVISION_ENTERA; }
+{modulo}		{ return MODULO; }
+{division_entera}		{ return DIVISION_ENTERA; }
 
-"_o"		{ return O_LOGICO; }
-"_y"		{ return Y_LOGICO; }
-"_no"		{ return NEGACION; }
+{o_logico}		{ return O_LOGICO; }
+{y_logico}		{ return Y_LOGICO; }
+{negacion}		{ return NEGACION; }
 
-"_borrar"     { return BORRAR;  }
-"_lugar"      { return LUGAR; }
+{borrar}     { return BORRAR;  }
+{lugar}      { return LUGAR; }
 
 "**"      {return POTENCIA;}
 

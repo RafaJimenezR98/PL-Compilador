@@ -1,4 +1,4 @@
-a:=2;
-b:=phi;
-a+b;
-escribir(c);
+a:=4;
+b:=3;
+si (a>b)
+entonces a:=45;
