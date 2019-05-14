@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -72,10 +72,10 @@ extern int yydebug;
     WHILE = 282,
     DO = 283,
     END_WHILE = 284,
-    REPEAT = 285,
+    REPETIR = 285,
     UNTIL = 286,
     FOR = 287,
-    SINCE = 288,
+    DESDE = 288,
     PASS = 289,
     END_FOR = 290,
     PRINT = 291,
@@ -85,27 +85,32 @@ extern int yydebug;
     BORRAR = 295,
     LUGAR = 296,
     RAND = 297,
-    O_LOGICO = 298,
-    Y_LOGICO = 299,
-    MAYOR_QUE = 300,
-    MENOR_QUE = 301,
-    MENOR_IGUAL = 302,
-    MAYOR_IGUAL = 303,
-    DISTINTO = 304,
-    IGUAL = 305,
-    NEGACION = 306,
-    MODULO = 307,
-    DIVISION_ENTERA = 308,
-    LPAREN = 309,
-    RPAREN = 310,
-    UNARIO = 311,
-    POTENCIA = 312
+    CONCATENACION = 298,
+    O_LOGICO = 299,
+    Y_LOGICO = 300,
+    MAYOR_QUE = 301,
+    MENOR_QUE = 302,
+    MENOR_IGUAL = 303,
+    MAYOR_IGUAL = 304,
+    DISTINTO = 305,
+    IGUAL = 306,
+    NEGACION = 307,
+    SUMA = 308,
+    RESTA = 309,
+    PRODUCTO = 310,
+    DIVISION = 311,
+    MODULO = 312,
+    DIVISION_ENTERA = 313,
+    LPAREN = 314,
+    RPAREN = 315,
+    UNARIO = 316,
+    POTENCIA = 317
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 131 "interpreter.y" /* yacc.c:1909  */
@@ -119,10 +124,8 @@ union YYSTYPE
   lp::Statement *st;				 /* NEW in example 16 */
   lp::AST *prog;					 /* NEW in example 16 */
 
-#line 123 "interpreter.tab.h" /* yacc.c:1909  */
+#line 128 "interpreter.tab.h" /* yacc.c:1909  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

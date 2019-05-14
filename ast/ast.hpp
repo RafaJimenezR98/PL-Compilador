@@ -1725,6 +1725,56 @@ class WhileStmt : public Statement
 };
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+/*!
+  \class   DoWhileStmt
+  \brief   Definition of atributes and methods of DoWhileStmt class
+  \note    DoWhileStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+*/
+class DoWhileStmt : public Statement
+{
+ private:
+  ExpNode *_cond; //!< Condicion of the Dowhile statement
+
+  std::list<lp::Statement *> *_statements1;//!< List of Statements 1
+
+  public:
+/*!
+	\brief Constructor of  DoWhileStmt
+	\param condition: ExpNode of the condition
+	\param statement: Statement of the body of the loop
+	\post  A new DoWhileStmt is created with the parameters
+*/
+  /*!
+     \brief Constructor of Compound IfStmt (with alternative)
+     \param condition: ExpNode of the condition
+     \param statemenList: List of Statements
+  */
+  DoWhileStmt(ExpNode *condition, std::list<lp::Statement *> * statementList): _statements1 (statementList)
+  {
+     this->_cond = condition;
+     //this->_statements1 = statementList;
+  }
+
+
+/*!
+	\brief   Print the DoWhileStmt
+	\return  void
+	\sa		 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the DoWhileStmt
+	\return  void
+	\sa		 print
+*/
+  void evaluate();
+};
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////

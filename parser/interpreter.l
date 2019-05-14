@@ -128,7 +128,7 @@ lugar (?i:_lugar)
 {hasta}     { return UNTIL;   }
 
 {para}     {  return FOR;  }
-{desde}     {  return SINCE;   }
+{desde}     {  return DESDE;   }
 {fin_para}     { return END_FOR; }
 
 {paso}      { return  PASS;   }

@@ -149,7 +149,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %type <stmts> stmtlist
 
 // New in example 17: if, while, block
-%type <st> stmt asgn print read if while dowhile
+%type <st> stmt asgn print read if while dowhile for borrar lugar print_string read_string
 
 %type <prog> program
 
@@ -182,13 +182,12 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /*******************************************/
 
 /* MODIFIED in examples 11, 13 */
-%token <identifier> VAR INDEFINIDA CONSTANTE BUILTIN
+%token <identifier> IDENTIFIER VAR NUMERICVARIABLE STRINGVARIABLE INDEFINIDA CONSTANTE NUMERICCONSTANT STRING BUILTIN
 
-%token       FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA
-             IF THEN ELSE END_IF
+%token       IF THEN ELSE END_IF
              WHILE DO END_WHILE
              REPETIR UNTIL
-             FOR SINCE PASS END_FOR
+             FOR DESDE PASS END_FOR
              PRINT PRINT_STRING READ READ_STRING
              BORRAR LUGAR
              RAND CONCATENACION
@@ -305,6 +304,11 @@ stmt: SEMICOLON  /* Empty statement: ";" */
  		// Default action
  		// $$ = $1;
  	 }
+   | for
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
 	/*  NEW in example 17 */
 ;
 
@@ -336,7 +340,14 @@ while:  WHILE cond DO stmtlist END_WHILE
 dowhile:  REPETIR stmtlist UNTIL cond
 		{
 			// Create a new while statement node
-			$$ = new lp::WhileStmt($4, $2);
+			$$ = new lp::DoWhileStmt($4, $2);
+        }
+;
+
+for:  FOR VAR DESDE
+		{
+			// Create a new while statement node
+			$$ = new lp::DoWhileStmt($4, $2);
         }
 ;
 

@@ -1299,7 +1299,7 @@ void lp::IfStmt::print()
 	for (it = this->_statements1->begin(); it != _statements1->end(); it++){
 		(*it)->print();
 	}
-
+python
 	if(!this->_statements2->empty()){
 		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
 			(*it)->print();
@@ -1362,6 +1362,38 @@ void lp::WhileStmt::evaluate()
 
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void lp::DoWhileStmt::print()
+{
+  std::cout << "DoWhileStmt: "  << std::endl;
+  // Condition
+  this->_cond->print();
+
+  // Body of the while loop
+  std::list<lp::Statement *>::iterator it;
+  for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+	  (*it)->print();
+  }
+
+  std::cout << std::endl;
+}
+
+
+void lp::DoWhileStmt::evaluate()
+{
+  // While the condition is true. the body is run
+
+  do{
+	  std::list<lp::Statement *>::iterator it;
+	  for (it = this->_statements1->begin(); it != _statements1->end(); it++){
+		  (*it)->evaluate();
+	  }
+  }while (this->_cond->evaluateBool() == true);
+
+}
 
 
 

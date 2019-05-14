@@ -83,7 +83,7 @@ static struct {
           "repetir",         REPETIR,
           "hasta",           UNTIL,
           "para",            FOR,
-          "desde",           SINCE,
+          "desde",           DESDE,
           "paso",            PASS,
           "fin_para",        END_FOR,
           "_borrar",         BORRAR,
