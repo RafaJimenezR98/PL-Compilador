@@ -75,6 +75,17 @@ namespace lp
 		return false;
 	}
 
+   /*!
+		\brief   Evaluate the string expression
+		\warning Virtual function: could be redefined in the heir classes
+		\return  string
+		\sa	 print
+	*/
+    virtual std::string evaluateString()
+   {
+      return " ";
+   };
+
 };
 
 
@@ -131,6 +142,14 @@ class VariableNode : public ExpNode
 		\sa		 print
 	*/
 	  bool evaluateBool();
+
+
+     /*!
+  		\brief   Evaluate the Variable as String
+  		\return  String
+  		\sa		 print
+  	*/
+     std::string evaluateString();
 
 };
 
@@ -240,6 +259,62 @@ class NumberNode : public ExpNode
 	double evaluateNumber();
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+/*!
+  \class StringNode
+  \brief Definition of atributes and methods of StringNode class
+  \note  StringNode Class publicly inherits from ExpNode class
+*/
+class StringNode : public ExpNode
+{
+ private:
+   std::string _string; //!< \brief number of the StringNode
+
+ public:
+
+/*!
+	\brief Constructor of StringNode
+	\param value: string
+	\post  A new StringNode is created with the value of the parameter
+	\note  Inline function
+*/
+  StringNode(std::string value)
+	{
+	    this->_string = value;
+	}
+
+/*!
+	\brief   Print the expression
+	\return  void
+	\sa		 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the expression
+	\return  double
+	\sa		 print
+*/
+  double evaluate();
+
+/*!
+	\brief   Evaluate the String
+	\return  std::string
+	\sa	 print
+*/
+
+  std::string evaluateString();
+
+/*!
+	\brief   Returns the variable type
+	\return  int
+	\sa	 print
+*/
+
+  int getType();
+};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1389,6 +1464,58 @@ class NotNode : public LogicalUnaryOperatorNode
 };
 
 
+/*!
+  \class   ConcatNode
+  \brief   Definition of atributes and methods of ConcatNode class
+  \note    ConcatNode Class publicly inherits from OperatorNode class
+		   and adds its own print and evaluate functions
+*/
+class ConcatNode : public OperatorNode
+{
+  public:
+
+/*!
+	\brief Constructor of ConcatNode uses OperatorNode's constructor as members initializer
+	\param L: pointer to ExpNode
+	\param R: pointer to ExpNode
+	\post  A new ConcatNode is created with the parameter
+*/
+  ConcatNode(ExpNode *L, ExpNode *R): OperatorNode(L,R)
+  {
+		// Empty
+  }
+
+/*!
+	\brief   Print the OrNode
+	\return  void
+	\sa		 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the OrNode
+	\return  double
+	\sa		 print
+*/
+  double evaluate();
+
+/*!
+	\brief   Evaluate the String
+	\return  std::string
+	\sa	 print
+*/
+
+  std::string evaluateString();
+
+/*!
+	\brief   Returns the variable type
+	\return  int
+	\sa	 print
+*/
+
+  int getType();
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1522,6 +1649,45 @@ class PrintStmt: public Statement
   void evaluate();
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+/*!
+  \class   PrintStringStmt
+  \brief   Definition of atributes and methods of PrintStringStmt class
+  \note    PrintStringStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+  \warning  In this class, print and evaluate functions have the same meaning.
+*/
+class PrintStringStmt: public Statement
+{
+ private:
+  ExpNode *_exp; //!< Expresssion the print statement
+
+ public:
+/*!
+	\brief Constructor of PrintStringStmt
+	\param expression: pointer to ExpStringNode
+	\post  A new PrintStringStmt is created with the parameter
+*/
+  PrintStringStmt(ExpNode *expression)
+	{
+		this->_exp = expression;
+	}
+
+/*!
+	\brief   Print the PrintStmt
+	\sa		 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the PrintStmt
+	\sa		 print
+*/
+  void evaluate();
+};
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1565,6 +1731,42 @@ class ReadStmt : public Statement
   void evaluate();
 };
 
+
+/*!
+  \class   ReadStringStmt
+  \brief   Definition of atributes and methods of ReadStringStmt class
+  \note    ReadStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+*/
+class ReadStringStmt : public Statement
+{
+  private:
+	std::string _id; //!< Name of the ReadStringStmt
+
+
+  public:
+/*!
+	\brief Constructor of ReadStringStmt
+	\param id: string, name of the variable of the ReadStmt
+	\post  A new ReadStringStmt is created with the parameter
+*/
+  ReadStringStmt(std::string id)
+	{
+		this->_id = id;
+	}
+
+/*!
+	\brief   Print the ReadStringStmt
+	\sa	 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the ReadStringStmt
+	\sa	 print
+*/
+  void evaluate();
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1856,6 +2058,67 @@ class DoWhileStmt : public Statement
 
 /*!
 	\brief   Evaluate the DoWhileStmt
+	\return  void
+	\sa		 print
+*/
+  void evaluate();
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// NEW in example 17
+
+/*!
+  \class   ForStmt
+  \brief   Definition of atributes and methods of WhileStmt class
+  \note    ForStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+*/
+class ForStmt : public Statement
+{
+ private:
+  std::string _id;
+  ExpNode *_exp1; //!< Condicion of the while statement
+  ExpNode *_exp2;
+  ExpNode *_exp3;
+
+  Statement *_stmt; //!< Statement of the body of the while loop
+
+  public:
+/*!
+	\brief Constructor of  ForStmt
+	\param condition: ExpNode of the condition
+	\param statement: Statement of the body of the loop
+	\post  A new ForStmt is created with the parameters
+*/
+  ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, ExpNode *condition3, Statement *statement)
+	{
+		this->_id = _identifier;
+		this->_exp1 = condition1;
+		this->_exp2 = condition2;
+		this->_exp3 = condition3;
+		this->_stmt = statement;
+	}
+
+   ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, Statement *statement)
+ 	{
+ 		this->_id = _identifier;
+ 		this->_exp1 = condition1;
+ 		this->_exp2 = condition2;
+ 		this->_stmt = statement;
+ 	}
+
+
+/*!
+	\brief   Print the ForStmt
+	\return  void
+	\sa		 evaluate
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the ForStmt
 	\return  void
 	\sa		 print
 */
