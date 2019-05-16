@@ -149,7 +149,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %type <stmts> stmtlist
 
 // New in example 17: if, while, block
-%type <st> stmt asgn print read if while dowhile for borrar lugar print_string read_string
+%type <st> stmt asgn print read if while dowhile for borrar lugar escribir_cadena leer_cadena
 
 %type <prog> program
 
@@ -287,6 +287,16 @@ stmt: SEMICOLON  /* Empty statement: ";" */
 		// Default action
 		// $$ = $1;
 	  }
+  | borrar SEMICOLON
+  	 {
+  		// Default action
+  		// $$ = $1;
+  	 }
+  | lugar SEMICOLON
+     	{
+     		// Default action
+     		// $$ = $1;
+     	}
 	/*  NEW in example 17 */
 	| if
 	 {
@@ -404,6 +414,19 @@ read:  READ LPAREN VAR RPAREN
 		}
 ;
 
+borrar: BORRAR
+    {
+
+      $$ = new lp::DeleteStmt($1);
+
+    }
+
+lugar: LUGAR LPAREN exp COMMA exp RPAREN
+    {
+
+      $$ = new lp::PlaceStmt($2, $3);
+
+    }
 
 exp:	NUMBER
 		{

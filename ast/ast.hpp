@@ -1571,6 +1571,93 @@ class ReadStmt : public Statement
 
 
 /*!
+  \class   DeleteStmt
+  \brief   Definition of atributes and methods of DeleteStmt class
+  \note    DeleteStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+*/
+class DeleteStmt : public Statement
+{
+  private:
+
+
+  public:
+/*!
+	\brief Constructor of DeleteStmt
+	\post  A new DeleteStmt is created with the parameter
+*/
+  DeleteStmt()
+	{
+
+	}
+
+/*!
+	\brief   Print the DeleteStmt
+	\return  void
+	\sa		 evaluate()
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the DeleteStmt
+	\return  void
+	\sa		 print
+*/
+  void evaluate();
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*!
+  \class   PlaceStmt
+  \brief   Definition of atributes and methods of PlaceStmt class
+  \note    PlaceStmt Class publicly inherits from Statement class
+		   and adds its own print and evaluate functions
+*/
+class PlaceStmt : public Statement
+{
+  private:
+    ExpNode *_exp1; //!< Condicion of the while statement
+    ExpNode *_exp2;
+
+
+  public:
+/*!
+	\brief Constructor of PlaceStmt
+	\param expression1: pointer to ExpNode
+  \param expression2: pointer to ExpNode
+	\post  A new PlaceStmt is created with the parameter
+*/
+  PlaceStmt(ExpNode *expression1, ExpNode *expression2)
+	{
+    this->_exp1 = expression1;
+		this->_exp2 = expression2;
+	}
+
+/*!
+	\brief   Print the PlaceStmt
+	\return  void
+	\sa		 evaluate()
+*/
+  void print();
+
+/*!
+	\brief   Evaluate the PlaceStmt
+	\return  void
+	\sa		 print
+*/
+  void evaluate();
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*!
   \class   EmptyStmt
   \brief   Definition of atributes and methods of EmptyStmt class
   \note    EmptyStmt Class publicly inherits from Statement class
