@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -58,61 +58,62 @@ extern int yydebug;
     COMMA = 268,
     NUMBER = 269,
     BOOL = 270,
-    IDENTIFIER = 271,
-    VAR = 272,
-    NUMERICVARIABLE = 273,
-    STRINGVARIABLE = 274,
-    INDEFINIDA = 275,
-    CONSTANTE = 276,
-    NUMERICCONSTANT = 277,
-    BUILTIN = 278,
-    STRING = 279,
-    IF = 280,
-    THEN = 281,
-    ELSE = 282,
-    END_IF = 283,
-    WHILE = 284,
-    DO = 285,
-    END_WHILE = 286,
-    REPETIR = 287,
-    UNTIL = 288,
-    FOR = 289,
-    DESDE = 290,
-    PASS = 291,
-    END_FOR = 292,
-    PRINT = 293,
-    PRINT_STRING = 294,
-    READ = 295,
-    READ_STRING = 296,
-    BORRAR = 297,
-    LUGAR = 298,
-    RAND = 299,
-    CONCATENACION = 300,
-    O_LOGICO = 301,
-    Y_LOGICO = 302,
-    MAYOR_QUE = 303,
-    MENOR_QUE = 304,
-    MENOR_IGUAL = 305,
-    MAYOR_IGUAL = 306,
-    DISTINTO = 307,
-    IGUAL = 308,
-    NEGACION = 309,
-    SUMA = 310,
-    RESTA = 311,
-    PRODUCTO = 312,
-    DIVISION = 313,
-    MODULO = 314,
-    DIVISION_ENTERA = 315,
-    LPAREN = 316,
-    RPAREN = 317,
-    UNARIO = 318,
-    POTENCIA = 319
+    TOK_EMPTY_LINE = 271,
+    IDENTIFIER = 272,
+    VAR = 273,
+    NUMERICVARIABLE = 274,
+    STRINGVARIABLE = 275,
+    INDEFINIDA = 276,
+    CONSTANTE = 277,
+    NUMERICCONSTANT = 278,
+    BUILTIN = 279,
+    STRING = 280,
+    IF = 281,
+    THEN = 282,
+    ELSE = 283,
+    END_IF = 284,
+    WHILE = 285,
+    DO = 286,
+    END_WHILE = 287,
+    REPETIR = 288,
+    UNTIL = 289,
+    FOR = 290,
+    DESDE = 291,
+    PASS = 292,
+    END_FOR = 293,
+    PRINT = 294,
+    PRINT_STRING = 295,
+    READ = 296,
+    READ_STRING = 297,
+    BORRAR = 298,
+    LUGAR = 299,
+    RAND = 300,
+    CONCATENACION = 301,
+    O_LOGICO = 302,
+    Y_LOGICO = 303,
+    MAYOR_QUE = 304,
+    MENOR_QUE = 305,
+    MENOR_IGUAL = 306,
+    MAYOR_IGUAL = 307,
+    DISTINTO = 308,
+    IGUAL = 309,
+    NEGACION = 310,
+    SUMA = 311,
+    RESTA = 312,
+    PRODUCTO = 313,
+    DIVISION = 314,
+    MODULO = 315,
+    DIVISION_ENTERA = 316,
+    LPAREN = 317,
+    RPAREN = 318,
+    UNARIO = 319,
+    POTENCIA = 320
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 133 "interpreter.y" /* yacc.c:1909  */
@@ -129,8 +130,10 @@ union YYSTYPE
   lp::Statement *st;				 /* NEW in example 16 */
   lp::AST *prog;					 /* NEW in example 16 */
 
-#line 133 "interpreter.tab.h" /* yacc.c:1909  */
+#line 134 "interpreter.tab.h" /* yacc.c:1909  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

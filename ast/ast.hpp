@@ -156,6 +156,56 @@ class VariableNode : public ExpNode
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+/*!	
+  \class NumericConstantNode
+  \brief Definition of atributes and methods of NumericConstantNode class
+  \note  NumericConstantNode Class publicly inherits from ExpNode class
+*/
+class NumericConstantNode : public ExpNode 
+{
+
+ private:
+  std::string _id; //!< Name of the NumericConstantNode
+
+public:
+
+/*!		
+	\brief Constructor of NumericVariableNode
+	\param value: double
+	\post  A new NumericVariableNode is created with the name of the parameter
+*/
+  NumericConstantNode(std::string value)
+	{
+		this->_id = value; 
+	}
+
+
+/*!
+	\brief   Print the NumericConstantNode
+	\return  void
+	\sa		 evaluate
+*/
+  void print();
+
+/*!	
+	\brief   Evaluate the NumericConstantNode
+	\return  double
+	\sa		 print
+*/
+  double evaluate();
+  
+/*!	
+	\brief   Returns the variable type
+	\return  int
+	\sa	 print
+*/
+
+  int getType();
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 /*!
   \class ConstantNode
   \brief Definition of atributes and methods of ConstantNode class
@@ -1480,7 +1530,7 @@ class ConcatNode : public OperatorNode
 	\param R: pointer to ExpNode
 	\post  A new ConcatNode is created with the parameter
 */
-  ConcatNode(ExpNode *L, ExpNode *R): OperatorNode(L,R)
+  ConcatNode(StringNode *L, StringNode *R): OperatorNode(L,R)
   {
 		// Empty
   }

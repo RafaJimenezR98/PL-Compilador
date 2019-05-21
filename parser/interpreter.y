@@ -184,6 +184,8 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /*******************************************/
 /* NEW in example 15 */
 %token <logic> BOOL
+
+%token <sval> TOK_EMPTY_LINE 
 /*******************************************/
 
  /* %token <string> STRING */

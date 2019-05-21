@@ -1100,8 +1100,8 @@ std::string lp::ConcatNode::evaluateString()
 	if (this->getType() == STRING)
    {
 
-    	leftString = this->_left->evaluate();
-    	rightString = this->_right->evaluate();
+    	leftString = this->_left->evaluateString();
+    	rightString = this->_right->evaluateString();
 	}
 	else{
 		warning("Runtime error: incompatible types of parameters for ", "operator Not");
@@ -1111,7 +1111,11 @@ std::string lp::ConcatNode::evaluateString()
 
 }
 
+int lp::ConcatNode::getType() 
+{ 
+	return STRING;
 
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1477,22 +1481,33 @@ void lp::ReadStringStmt::evaluate()
 	switch(n->getType())
 	{
 		case NUMBER:
-			lp::stringVariable *aux = new lp::stringVariable(this->_id, VARIABLE, STRING, value);
-			table.deleteSymbol(aux);
+		{
+			lp::stringVariable *aux = new lp::stringVariable(this->_id, VAR, STRING, value);
+			table.eraseSymbol(this->_id);
 			table.installSymbol(aux);
+
+			break;
+		}		
 
 		case INDEFINIDA:
-			lp::stringVariable *aux = new lp::stringVariable(this->_id, VARIABLE, STRING, value);
-			table.deleteSymbol(aux);
+		{
+			lp::stringVariable *aux = new lp::stringVariable(this->_id, VAR, STRING, value);
+			table.eraseSymbol(this->_id);
 			table.installSymbol(aux);
 
+			break;
+		}			
+
 		case STRING:
+		{
 			n->setValue(value);
 
 			break;
+		}			
 
-		default:
+		default:{
 			warning("Runtime error: incompatible type for ", "print");
+		}			
 	}
 }
 
@@ -1529,8 +1544,8 @@ void lp::PlaceStmt::print()
 void lp::PlaceStmt::evaluate()
 {
 
- 	int x = (int)this->_exp1->evaluate();
- 	int y = (int)this->_exp2->evaluate();
+ 	int x = (int)this->_exp1->evaluateNumber();
+ 	int y = (int)this->_exp2->evaluateNumber();
 	PLACE(x, y);
 
 }
@@ -1672,7 +1687,7 @@ void lp::ForStmt::print()
   this->_exp1->print();
   this->_exp2->print();
 
-	if(!this->_exp3->empty()){
+	if(this->_exp3 != NULL){
 		this->_exp3->print();
 	}
 
@@ -1690,8 +1705,8 @@ void lp::ForStmt::print()
 void lp::ForStmt::evaluate()
 {
 
- 	double desde = this->_exp1->evaluate();
- 	double end = this->_exp2->evaluate();
+ 	double desde = this->_exp1->evaluateNumber();
+ 	double hasta = this->_exp2->evaluateNumber();
 
   	// Get the identifier in the table of symbols as NumericVariable
 	lp::NumericVariable *n = (lp::NumericVariable *) table.getSymbol(this->_id);
@@ -1705,21 +1720,29 @@ void lp::ForStmt::evaluate()
 
 	double inc;
 
-	if(!this->_exp3->empty()){
-			inc= this->_exp3->evaluate();
+	if(this->_exp3 != NULL){
+			inc= this->_exp3->evaluateNumber();
 
-			if( (desde < end && inc > 0)  || (desde > end && inc < 0) ){
+			if( (desde < hasta && inc > 0)  || (desde > hasta && inc < 0) ){
 
-				if(desde < end && inc > 0){
+				if(desde < hasta && inc > 0){
 
-					 for(n->getValue(); n->getValue() <= end; n->setValue(n->getValue()+inc))
+					 for(n->getValue(); n->getValue() <= hasta; n->setValue(n->getValue()+inc))
 					{
-						this->_stmt->evaluate();
+						std::list<Statement *>::iterator stmtIter;
+						for (stmtIter = this->_statements1->begin(); stmtIter != this->_statements1->end(); stmtIter++)
+  					{
+     					(*stmtIter)->evaluate();
+  					}
 					}
 				}else{
-					for(n->getValue(); n->getValue() >= end; n->setValue(n->getValue()+inc))
+					for(n->getValue(); n->getValue() >= hasta; n->setValue(n->getValue()+inc))
 					{
-						this->_stmt->evaluate();
+						std::list<Statement *>::iterator stmtIter;
+						for (stmtIter = this->_statements1->begin(); stmtIter != this->_statements1->end(); stmtIter++)
+  					{
+     					(*stmtIter)->evaluate();
+  					}
 					}
 				}
 		 	}else{
@@ -1729,11 +1752,15 @@ void lp::ForStmt::evaluate()
 			}
 	}
 	else{
-		if(value < end)
+		if(desde < hasta)
 		{
-			for(n->getValue(); n->getValue() <= end; n->setValue(n->getValue()+1))
+			for(n->getValue(); n->getValue() <= hasta; n->setValue(n->getValue()+1))
 			{
-				this->_stmt->evaluate();
+				std::list<Statement *>::iterator stmtIter;
+						for (stmtIter = this->_statements1->begin(); stmtIter != this->_statements1->end(); stmtIter++)
+  					{
+     					(*stmtIter)->evaluate();
+  					}
 			}
 		}
 		else
