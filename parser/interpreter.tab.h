@@ -58,53 +58,55 @@ extern int yydebug;
     COMMA = 268,
     NUMBER = 269,
     BOOL = 270,
-    VAR = 271,
-    INDEFINIDA = 272,
-    CONSTANTE = 273,
-    BUILTIN = 274,
-    FUNCION0_PREDEFINIDA = 275,
-    FUNCION1_PREDEFINIDA = 276,
-    FUNCION2_PREDEFINIDA = 277,
-    IF = 278,
-    THEN = 279,
-    ELSE = 280,
-    END_IF = 281,
-    WHILE = 282,
-    DO = 283,
-    END_WHILE = 284,
-    REPETIR = 285,
-    UNTIL = 286,
-    FOR = 287,
-    DESDE = 288,
-    PASS = 289,
-    END_FOR = 290,
-    PRINT = 291,
-    PRINT_STRING = 292,
-    READ = 293,
-    READ_STRING = 294,
-    BORRAR = 295,
-    LUGAR = 296,
-    RAND = 297,
-    CONCATENACION = 298,
-    O_LOGICO = 299,
-    Y_LOGICO = 300,
-    MAYOR_QUE = 301,
-    MENOR_QUE = 302,
-    MENOR_IGUAL = 303,
-    MAYOR_IGUAL = 304,
-    DISTINTO = 305,
-    IGUAL = 306,
-    NEGACION = 307,
-    SUMA = 308,
-    RESTA = 309,
-    PRODUCTO = 310,
-    DIVISION = 311,
-    MODULO = 312,
-    DIVISION_ENTERA = 313,
-    LPAREN = 314,
-    RPAREN = 315,
-    UNARIO = 316,
-    POTENCIA = 317
+    IDENTIFIER = 271,
+    VAR = 272,
+    NUMERICVARIABLE = 273,
+    STRINGVARIABLE = 274,
+    INDEFINIDA = 275,
+    CONSTANTE = 276,
+    NUMERICCONSTANT = 277,
+    BUILTIN = 278,
+    STRING = 279,
+    IF = 280,
+    THEN = 281,
+    ELSE = 282,
+    END_IF = 283,
+    WHILE = 284,
+    DO = 285,
+    END_WHILE = 286,
+    REPETIR = 287,
+    UNTIL = 288,
+    FOR = 289,
+    DESDE = 290,
+    PASS = 291,
+    END_FOR = 292,
+    PRINT = 293,
+    PRINT_STRING = 294,
+    READ = 295,
+    READ_STRING = 296,
+    BORRAR = 297,
+    LUGAR = 298,
+    RAND = 299,
+    CONCATENACION = 300,
+    O_LOGICO = 301,
+    Y_LOGICO = 302,
+    MAYOR_QUE = 303,
+    MENOR_QUE = 304,
+    MENOR_IGUAL = 305,
+    MAYOR_IGUAL = 306,
+    DISTINTO = 307,
+    IGUAL = 308,
+    NEGACION = 309,
+    SUMA = 310,
+    RESTA = 311,
+    PRODUCTO = 312,
+    DIVISION = 313,
+    MODULO = 314,
+    DIVISION_ENTERA = 315,
+    LPAREN = 316,
+    RPAREN = 317,
+    UNARIO = 318,
+    POTENCIA = 319
   };
 #endif
 
@@ -113,18 +115,21 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 131 "interpreter.y" /* yacc.c:1909  */
+#line 133 "interpreter.y" /* yacc.c:1909  */
 
   char * identifier; 				 /* NEW in example 7 */
   double number;
   bool logic;						 /* NEW in example 15 */
+
+  //std::string stringvariable;
+
   lp::ExpNode *expNode;  			 /* NEW in example 16 */
   std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
   std::list<lp::Statement *> *stmts; /* NEW in example 16 */
   lp::Statement *st;				 /* NEW in example 16 */
   lp::AST *prog;					 /* NEW in example 16 */
 
-#line 128 "interpreter.tab.h" /* yacc.c:1909  */
+#line 133 "interpreter.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

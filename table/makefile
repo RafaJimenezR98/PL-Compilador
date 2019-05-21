@@ -19,7 +19,7 @@ OBJECTS= table.o symbol.o variable.o numericVariable.o \
 		keyword.o \
 		builtin.o builtinParameter1.o mathFunction.o \
 		builtinParameter0.o builtinParameter2.o \
-		logicalVariable.o logicalConstant.o
+		logicalVariable.o logicalConstant.o stringVariable.o
 
 # Predefined macros
 #
@@ -88,6 +88,10 @@ builtinParameter0.o: builtinParameter0.cpp builtinParameter0.hpp builtin.hpp sym
 builtinParameter2.o: builtinParameter2.cpp builtinParameter2.hpp builtin.hpp symbol.hpp symbolInterface.hpp
 	@echo "Compiling " $<
 	@$(CPP) $(CFLAGS) $<
+
+stringVariable.o: stringVariable.cpp stringVariable.hpp variable.hpp symbol.hpp symbolInterface.hpp
+	@echo "Compiling " stringVariable.cpp
+	@$(CPP) $(CFLAGS) stringVariable.cpp	
 
 #######################################################
 # NEW in example 10

@@ -1986,11 +1986,6 @@ class WhileStmt : public Statement
 	\param statement: Statement of the body of the loop
 	\post  A new WhileStmt is created with the parameters
 */
-  /*!
-     \brief Constructor of Compound IfStmt (with alternative)
-     \param condition: ExpNode of the condition
-     \param statemenList: List of Statements
-  */
   WhileStmt(ExpNode *condition, std::list<lp::Statement *> * statementList): _statements1 (statementList)
   {
      this->_cond = condition;
@@ -2083,7 +2078,7 @@ class ForStmt : public Statement
   ExpNode *_exp2;
   ExpNode *_exp3;
 
-  Statement *_stmt; //!< Statement of the body of the while loop
+  std::list<lp::Statement *> *_statements1;//!< List of Statements 1
 
   public:
 /*!
@@ -2092,21 +2087,19 @@ class ForStmt : public Statement
 	\param statement: Statement of the body of the loop
 	\post  A new ForStmt is created with the parameters
 */
-  ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, ExpNode *condition3, Statement *statement)
+  ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, ExpNode *condition3, std::list<lp::Statement *> * statementList): _statements1 (statementList)
 	{
 		this->_id = _identifier;
 		this->_exp1 = condition1;
 		this->_exp2 = condition2;
 		this->_exp3 = condition3;
-		this->_stmt = statement;
 	}
 
-   ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, Statement *statement)
+   ForStmt(std::string _identifier, ExpNode *condition1, ExpNode *condition2, std::list<lp::Statement *> * statementList): _statements1 (statementList)
  	{
  		this->_id = _identifier;
  		this->_exp1 = condition1;
  		this->_exp2 = condition2;
- 		this->_stmt = statement;
  	}
 
 

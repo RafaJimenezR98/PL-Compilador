@@ -34,6 +34,7 @@
 #include "../table/builtinParameter0.hpp"
 #include "../table/builtinParameter1.hpp"
 #include "../table/builtinParameter2.hpp"
+#include "../table/stringVariable.hpp"
 
 #include "../parser/interpreter.tab.h"
 
@@ -217,7 +218,7 @@ double lp::NumericConstantNode::evaluate()
 	lp::NumericConstant *n = (lp::NumericConstant *) table.getSymbol(this->_id);
 
 	// Check if the type of the identifier is undefined
-	if (n->getType() == UNDEFINED)
+	if (n->getType() == INDEFINIDA)
 		execerror("Undefined variable", n->getName());
 
 	// Return the value of the identifier
@@ -1286,7 +1287,7 @@ void lp::AssignmentStmt::evaluate()
 				/* Get the identifier of the previous asgn in the table of symbols as LogicalVariable */
 				lp::LogicalVariable *secondVar = (lp::LogicalVariable *) table.getSymbol(this->_asgn->_id);
 				// Check the type of the first variable
-				if (firstVar->getType() == NUMBER)
+				if (firstVar->getType() == BOOL)
 				{
 				/* Get the identifier of the first variable in the table of symbols as LogicalVariable */
 				lp::LogicalVariable *firstVar = (lp::LogicalVariable *) table.getSymbol(this->_id);
@@ -1316,7 +1317,7 @@ void lp::AssignmentStmt::evaluate()
 				/* Get the identifier of the previous asgn in the table of symbols as LogicalVariable */
 				lp::stringVariable *secondVar = (lp::stringVariable *) table.getSymbol(this->_asgn->_id);
 				// Check the type of the first variable
-				if (firstVar->getType() == NUMBER)
+				if (firstVar->getType() == STRING)
 				{
 				/* Get the identifier of the first variable in the table of symbols as LogicalVariable */
 				lp::stringVariable *firstVar = (lp::stringVariable *) table.getSymbol(this->_id);
@@ -1385,6 +1386,29 @@ void lp::PrintStmt::evaluate()
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void lp::PrintStringStmt::print()
+{
+  std::cout << "PrintStringStmt: "  << std::endl;
+  std::cout << " printString ";
+  this->_exp->print();
+  std::cout << std::endl;
+}
+
+
+void lp::PrintStringStmt::evaluate()
+{
+
+	if (this->_exp->getType() == NUMBER)
+		execerror("Non compatible variable","exit");
+
+	std::cout << this->_exp->evaluateString();
+
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1429,6 +1453,46 @@ void lp::ReadStmt::evaluate()
 									  VAR,NUMBER,value);
 
 		table.installSymbol(n);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void lp::ReadStringStmt::print()
+{
+  std::cout << "ReadStringStmt: "  << std::endl;
+  std::cout << " read string (" << this->_id << ")";
+  std::cout << std::endl;
+}
+
+
+void lp::ReadStringStmt::evaluate()
+{
+	std::string value;
+	getline(std::cin, value);
+
+	lp::stringVariable *n = (lp::stringVariable *) table.getSymbol(this->_id);
+
+	switch(n->getType())
+	{
+		case NUMBER:
+			lp::stringVariable *aux = new lp::stringVariable(this->_id, VARIABLE, STRING, value);
+			table.deleteSymbol(aux);
+			table.installSymbol(aux);
+
+		case INDEFINIDA:
+			lp::stringVariable *aux = new lp::stringVariable(this->_id, VARIABLE, STRING, value);
+			table.deleteSymbol(aux);
+			table.installSymbol(aux);
+
+		case STRING:
+			n->setValue(value);
+
+			break;
+
+		default:
+			warning("Runtime error: incompatible type for ", "print");
 	}
 }
 
@@ -1501,7 +1565,7 @@ void lp::IfStmt::print()
 	for (it = this->_statements1->begin(); it != _statements1->end(); it++){
 		(*it)->print();
 	}
-python
+
 	if(!this->_statements2->empty()){
 		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
 			(*it)->print();
@@ -1597,7 +1661,90 @@ void lp::DoWhileStmt::evaluate()
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+void lp::ForStmt::print()
+{
+  std::cout << "ForStmt: "  << std::endl;
+  // Condition
+  std::cout << _id << std::endl;
+  this->_exp1->print();
+  this->_exp2->print();
+
+	if(!this->_exp3->empty()){
+		this->_exp3->print();
+	}
+
+
+  // Body of the for loop
+	 std::list<Statement *>::iterator stmtIter;
+	for (stmtIter = this->_statements1->begin(); stmtIter != this->_statements1->end(); stmtIter++)
+  {
+     (*stmtIter)->print();
+  }
+
+  std::cout << std::endl;
+}
+
+void lp::ForStmt::evaluate()
+{
+
+ 	double desde = this->_exp1->evaluate();
+ 	double end = this->_exp2->evaluate();
+
+  	// Get the identifier in the table of symbols as NumericVariable
+	lp::NumericVariable *n = (lp::NumericVariable *) table.getSymbol(this->_id);
+
+	// Assignment the read value to the identifier in the table of symbols
+	n->setValue(desde);
+
+	// Change the type of the identifier if it was undefined
+	if (n->getType() == INDEFINIDA)
+			 n->setType(NUMERICVARIABLE);
+
+	double inc;
+
+	if(!this->_exp3->empty()){
+			inc= this->_exp3->evaluate();
+
+			if( (desde < end && inc > 0)  || (desde > end && inc < 0) ){
+
+				if(desde < end && inc > 0){
+
+					 for(n->getValue(); n->getValue() <= end; n->setValue(n->getValue()+inc))
+					{
+						this->_stmt->evaluate();
+					}
+				}else{
+					for(n->getValue(); n->getValue() >= end; n->setValue(n->getValue()+inc))
+					{
+						this->_stmt->evaluate();
+					}
+				}
+		 	}else{
+				std::cout << RED;
+				std::cout << "Bucle infinito \n";
+				std::cout << RESET;
+			}
+	}
+	else{
+		if(value < end)
+		{
+			for(n->getValue(); n->getValue() <= end; n->setValue(n->getValue()+1))
+			{
+				this->_stmt->evaluate();
+			}
+		}
+		else
+		{
+			std::cout << RED;
+			std::cout << "Bucle infinito \n";
+			std::cout << RESET;
+		}
+	}
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

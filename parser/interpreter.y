@@ -71,6 +71,8 @@
 #include "../table/builtinParameter2.hpp"
 /*******************************************/
 
+#include "../table/stringVariable.hpp"
+
 
 /*******************************************/
 /* NEW in example 10 */
@@ -132,8 +134,8 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
   char * identifier; 				 /* NEW in example 7 */
   double number;
   bool logic;						 /* NEW in example 15 */
-  
-  std::string string;
+
+  //std::string stringvariable;
 
   lp::ExpNode *expNode;  			 /* NEW in example 16 */
   std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
@@ -324,6 +326,17 @@ stmt: SEMICOLON  /* Empty statement: ";" */
  		// Default action
  		// $$ = $1;
  	 }
+
+   | escribir_cadena
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
+   | leer_cadena
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
 	/*  NEW in example 17 */
 ;
 
@@ -359,11 +372,16 @@ dowhile:  REPETIR stmtlist UNTIL cond
         }
 ;
 
-for:  FOR VAR DESDE
-		{
-			// Create a new while statement node
-			$$ = new lp::DoWhileStmt($4, $2);
+for:  FOR VAR DESDE exp UNTIL exp PASS exp DO stmtlist END_FOR
+    {
+    // Create a new while statement node
+      $$ = new lp::ForStmt($2, $4, $6, $8, $10);
         }
+    |  FOR VAR DESDE exp UNTIL exp DO stmtlist END_FOR
+  		{
+  			// Create a new while statement node
+  			$$ = new lp::ForStmt($2, $4, $6, $8);
+          }
 ;
 
 	/*  NEW in example 17 */
@@ -399,10 +417,17 @@ asgn:   VAR ASIGNACION exp
 ;
 
 
-print:  PRINT exp
+print:  PRINT LPAREN exp RPAREN
 		{
 			// Create a new print node
-			 $$ = new lp::PrintStmt($2);
+			 $$ = new lp::PrintStmt($3);
+		}
+;
+
+escribir_cadena:  PRINT_STRING LPAREN exp RPAREN
+		{
+			// Create a new print node
+			 $$ = new lp::PrintStringStmt($3);
 		}
 ;
 
@@ -419,17 +444,24 @@ read:  READ LPAREN VAR RPAREN
 		}
 ;
 
+leer_cadena:  READ_STRING LPAREN VAR RPAREN
+		{
+			// Create a new read node
+			 $$ = new lp::ReadStringStmt($3);
+		}
+;
+
 borrar: BORRAR
     {
 
-      $$ = new lp::DeleteStmt($1);
+      $$ = new lp::DeleteStmt();
 
     }
 
 lugar: LUGAR LPAREN exp COMMA exp RPAREN
     {
 
-      $$ = new lp::PlaceStmt($2, $3);
+      $$ = new lp::PlaceStmt($3, $5);
 
     }
 
