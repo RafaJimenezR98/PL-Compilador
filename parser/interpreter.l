@@ -58,6 +58,10 @@ numero1 {numero}+\.?
 
 numero2 {numero}*\.{numero}+
 
+comentario #([^']|\\\')*#
+
+STRING "'"([^']|\\\')*"'"
+
 identificador {letra}(_?({letra}|{numero}))*
 
 identificador_mal1 {letra}(__+({letra}|{numero}))+
@@ -105,6 +109,7 @@ fin_para (?i:fin_para)
 borrar (?i:_borrar)
 lugar (?i:_lugar)
 
+concatenacion (||)
 
 %x ERROR
 
@@ -271,7 +276,6 @@ lugar (?i:_lugar)W in example 7 */
 
 "@".*$ { }
 
-
 {modulo}		{ return MODULO; }
 {division_entera}		{ return DIVISION_ENTERA; }
 
@@ -281,6 +285,17 @@ lugar (?i:_lugar)W in example 7 */
 
 {borrar}     { return BORRAR;  }
 {lugar}      { return LUGAR; }
+
+{comentario} { }
+
+{identificador_mal6} {execerror("identificador mal escrito. No empieza por una letra, tiene varias _ seguidas y termina en _", yytext);}
+{identificador_mal5} {execerror("identificador mal escrito. Varias _ seguidas y termina en _", yytext);}
+{identificador_mal4} {execerror("identificador mal escrito. No empieza por una letra y tiene varias _ seguidas", yytext);}
+{identificador_mal8} {execerror("identificador mal escrito. No empieza por una letra y termina en _", yytext);}
+{identificador_mal3} {execerror("identificador mal escrito. Termina en _", yytext);}
+{identificador_mal2} {execerror("identificador mal escrito. No empieza por una letra", yytext);}
+{identificador_mal1} {execerror("identificador mal escrito. Varias _ seguidas", yytext);}
+{identificador_mal7} {execerror("identificador mal escrito. Solo se escribe _", yytext);}
 
 "**"      {return POTENCIA;}
 
@@ -295,7 +310,41 @@ lugar (?i:_lugar)W in example 7 */
 
 "}"		{ return RIGHTCURLYBRACKET; }	/* NEW in example 17 */
 
+{STRING}        {
+			for(int i = 0; yytext[i] != '\0'; i++)
+                	{
+				yytext[i] = yytext[i+1];
+			}
+			yytext[strlen(yytext)-1]='\0';
 
+			int j= 0;
+			int k = 0;
+			int a = 0;
+
+			for(int i = 0; yytext[i] != '\0'; i++)
+                	{
+				if(yytext[i]=='\\' && yytext[i+1]=='\'')
+				{
+					yytext[i]=yytext[i+1];
+
+
+					if(yytext[i] != '\0')
+					{
+						k++;
+						i++;
+						a++;
+					}
+				}
+				yytext[j] = yytext[k];
+				j++;
+				k++;
+			}
+
+			if(a != 0)
+				yytext[strlen(yytext)-2]='\0';
+			yylval.stringvariable = new std::string (yytext);
+			return STRING;
+		}
 
 ^# { /* The interpreter finishes when the symbol # is written at the beginning of the line */
 	/* std::cout << CLEAR_SCREEN; */

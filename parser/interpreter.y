@@ -135,7 +135,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
   double number;
   bool logic;						 /* NEW in example 15 */
 
-  //std::string stringvariable;
+  std::string *stringvariable;
 
   lp::ExpNode *expNode;  			 /* NEW in example 16 */
   std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
@@ -185,13 +185,15 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /* NEW in example 15 */
 %token <logic> BOOL
 
-%token <sval> TOK_EMPTY_LINE 
+%token <stringvariable> STRING
+
+%token <sval> TOK_EMPTY_LINE
 /*******************************************/
 
  /* %token <string> STRING */
 
 /* MODIFIED in examples 11, 13 */
-%token <identifier> IDENTIFIER VAR NUMERICVARIABLE STRINGVARIABLE INDEFINIDA CONSTANTE NUMERICCONSTANT BUILTIN STRING
+%token <identifier> IDENTIFIER VAR NUMERICVARIABLE STRINGVARIABLE INDEFINIDA CONSTANTE NUMERICCONSTANT BUILTIN
 
 %token       IF THEN ELSE END_IF
              WHILE DO END_WHILE
@@ -533,6 +535,11 @@ exp:	NUMBER
 		  // Create a new power node
   		  $$ = new lp::PowerNode($1, $3);
 		}
+    |	exp CONCATENACION exp
+       	{
+  		  // Create a new power node
+    		  $$ = new lp::ConcatNode($1, $3);
+  		}
 
 	 | VAR
 		{
@@ -546,6 +553,12 @@ exp:	NUMBER
 		  $$ = new lp::ConstantNode($1);
 
 		}
+
+    | 	STRING
+  		{
+  			// Create a new plus node
+  			 $$ = new lp::StringNode($1);
+  		 }
 
 	| BUILTIN LPAREN listOfExp RPAREN
 		{

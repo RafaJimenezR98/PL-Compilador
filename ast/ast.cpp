@@ -256,17 +256,12 @@ double lp::NumberNode::evaluateNumber()
 
 void lp::StringNode::print()
 {
-  std::cout << "StringNode: " << this->_string << std::endl;
-}
-
-double lp::StringNode::evaluate()
-{
-    return -1;
+  std::cout << "StringNode: " << *(this->_string) << std::endl;
 }
 
 std::string lp::StringNode::evaluateString()
 {
-	return this->_string;
+	return *(this->_string);
 
 }
 
@@ -1111,8 +1106,8 @@ std::string lp::ConcatNode::evaluateString()
 
 }
 
-int lp::ConcatNode::getType() 
-{ 
+int lp::ConcatNode::getType()
+{
 	return STRING;
 
 }
@@ -1138,11 +1133,13 @@ void lp::AssignmentStmt::evaluate()
 		a: firstVar
 		b: secondVar
 	*/
+
 	lp::Variable *firstVar = (lp::Variable *) table.getSymbol(this->_id);
 
 	// Check the expression
 	if (this->_exp != NULL)
 	{
+
 		// Check the type of the expression of the asgn
 		switch(this->_exp->getType())
 		{
@@ -1232,6 +1229,8 @@ void lp::AssignmentStmt::evaluate()
 					table.installSymbol(v);
 				}
 			}
+
+			break;
 
 			default:
 				warning("Runtime error: incompatible type of expression for ", "Assigment");
@@ -1487,7 +1486,7 @@ void lp::ReadStringStmt::evaluate()
 			table.installSymbol(aux);
 
 			break;
-		}		
+		}
 
 		case INDEFINIDA:
 		{
@@ -1496,18 +1495,18 @@ void lp::ReadStringStmt::evaluate()
 			table.installSymbol(aux);
 
 			break;
-		}			
+		}
 
 		case STRING:
 		{
 			n->setValue(value);
 
 			break;
-		}			
+		}
 
 		default:{
 			warning("Runtime error: incompatible type for ", "print");
-		}			
+		}
 	}
 }
 

@@ -156,12 +156,12 @@ class VariableNode : public ExpNode
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/*!	
+/*!
   \class NumericConstantNode
   \brief Definition of atributes and methods of NumericConstantNode class
   \note  NumericConstantNode Class publicly inherits from ExpNode class
 */
-class NumericConstantNode : public ExpNode 
+class NumericConstantNode : public ExpNode
 {
 
  private:
@@ -169,14 +169,14 @@ class NumericConstantNode : public ExpNode
 
 public:
 
-/*!		
+/*!
 	\brief Constructor of NumericVariableNode
 	\param value: double
 	\post  A new NumericVariableNode is created with the name of the parameter
 */
   NumericConstantNode(std::string value)
 	{
-		this->_id = value; 
+		this->_id = value;
 	}
 
 
@@ -187,14 +187,14 @@ public:
 */
   void print();
 
-/*!	
+/*!
 	\brief   Evaluate the NumericConstantNode
 	\return  double
 	\sa		 print
 */
   double evaluate();
-  
-/*!	
+
+/*!
 	\brief   Returns the variable type
 	\return  int
 	\sa	 print
@@ -320,7 +320,7 @@ class NumberNode : public ExpNode
 class StringNode : public ExpNode
 {
  private:
-   std::string _string; //!< \brief number of the StringNode
+   std::string *_string; //!< \brief number of the StringNode
 
  public:
 
@@ -330,7 +330,7 @@ class StringNode : public ExpNode
 	\post  A new StringNode is created with the value of the parameter
 	\note  Inline function
 */
-  StringNode(std::string value)
+  StringNode(std::string *value)
 	{
 	    this->_string = value;
 	}
@@ -341,13 +341,6 @@ class StringNode : public ExpNode
 	\sa		 evaluate
 */
   void print();
-
-/*!
-	\brief   Evaluate the expression
-	\return  double
-	\sa		 print
-*/
-  double evaluate();
 
 /*!
 	\brief   Evaluate the String

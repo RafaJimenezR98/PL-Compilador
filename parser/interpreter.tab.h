@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -58,16 +58,16 @@ extern int yydebug;
     COMMA = 268,
     NUMBER = 269,
     BOOL = 270,
-    TOK_EMPTY_LINE = 271,
-    IDENTIFIER = 272,
-    VAR = 273,
-    NUMERICVARIABLE = 274,
-    STRINGVARIABLE = 275,
-    INDEFINIDA = 276,
-    CONSTANTE = 277,
-    NUMERICCONSTANT = 278,
-    BUILTIN = 279,
-    STRING = 280,
+    STRING = 271,
+    TOK_EMPTY_LINE = 272,
+    IDENTIFIER = 273,
+    VAR = 274,
+    NUMERICVARIABLE = 275,
+    STRINGVARIABLE = 276,
+    INDEFINIDA = 277,
+    CONSTANTE = 278,
+    NUMERICCONSTANT = 279,
+    BUILTIN = 280,
     IF = 281,
     THEN = 282,
     ELSE = 283,
@@ -113,7 +113,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 133 "interpreter.y" /* yacc.c:1909  */
@@ -122,7 +122,7 @@ union YYSTYPE
   double number;
   bool logic;						 /* NEW in example 15 */
 
-  //std::string stringvariable;
+  std::string *stringvariable;
 
   lp::ExpNode *expNode;  			 /* NEW in example 16 */
   std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
@@ -132,8 +132,6 @@ union YYSTYPE
 
 #line 134 "interpreter.tab.h" /* yacc.c:1909  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
