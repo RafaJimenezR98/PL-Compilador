@@ -298,6 +298,17 @@ stmt: SEMICOLON  /* Empty statement: ";" */
 		// Default action
 		// $$ = $1;
 	  }
+
+		| escribir_cadena SEMICOLON
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
+   | leer_cadena SEMICOLON
+ 	 {
+ 		// Default action
+ 		// $$ = $1;
+ 	 }
   | borrar SEMICOLON
   	 {
   		// Default action
@@ -326,17 +337,6 @@ stmt: SEMICOLON  /* Empty statement: ";" */
  		// $$ = $1;
  	 }
    | for
- 	 {
- 		// Default action
- 		// $$ = $1;
- 	 }
-
-   | escribir_cadena
- 	 {
- 		// Default action
- 		// $$ = $1;
- 	 }
-   | leer_cadena
  	 {
  		// Default action
  		// $$ = $1;

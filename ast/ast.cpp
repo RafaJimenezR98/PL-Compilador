@@ -1580,7 +1580,7 @@ void lp::IfStmt::print()
 		(*it)->print();
 	}
 
-	if(!this->_statements2->empty()){
+	if(this->_statements2 != NULL){
 		for (it = this->_statements2->begin(); it != _statements2->end(); it++){
 			(*it)->print();
 		}
@@ -1599,7 +1599,7 @@ void lp::IfStmt::evaluate()
  		(*it)->evaluate();
  	}
 
- 	if(!this->_statements2->empty()){
+ 	if(this->_statements2 != NULL){
  		for (it = this->_statements2->begin(); it != this->_statements2->end(); it++){
  			(*it)->evaluate();
  		}

@@ -1523,7 +1523,7 @@ class ConcatNode : public OperatorNode
 	\param R: pointer to ExpNode
 	\post  A new ConcatNode is created with the parameter
 */
-  ConcatNode(StringNode *L, StringNode *R): OperatorNode(L,R)
+  ConcatNode(ExpNode *L, ExpNode *R): OperatorNode(L,R)
   {
 		// Empty
   }
