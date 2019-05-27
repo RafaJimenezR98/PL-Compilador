@@ -167,14 +167,15 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %token SEMICOLON
 /*******************************************/
 
+/* NEW in example 14 */
+%token COMMA
+
 // NEW in example 17
 %token LETFCURLYBRACKET RIGHTCURLYBRACKET
 
 /* NEW in example 7 */
 %right ASIGNACION SUBSTRACT ADD MULTIPLY DIVIDE INCREMENTO DECREMENTO
 
-/* NEW in example 14 */
-%token COMMA
 
 /*******************************************/
 /* MODIFIED in example 4 */

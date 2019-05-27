@@ -58,9 +58,11 @@ numero1 {numero}+\.?
 
 numero2 {numero}*\.{numero}+
 
-comentario #([^']|\\\')*#
+numero3 {numero}+\.?e[\+-]{numero}+
 
 STRING "'"([^']|\\\')*"'"
+
+comentario #([^']|\\\')*#
 
 identificador {letra}(_?({letra}|{numero}))*
 
@@ -157,7 +159,7 @@ concatenacion (||)
 			return COMMA;
 		}
 
-{numero1}|{numero2}  {
+{numero1}|{numero2}|{numero3}  {
 					  /* MODIFIED in example 4 */
 					  /* Conversion of type and sending of the numerical value to the parser */
 					   yylval.number = atof(yytext);

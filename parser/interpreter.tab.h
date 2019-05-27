@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,16 +46,16 @@ extern int yydebug;
   enum yytokentype
   {
     SEMICOLON = 258,
-    LETFCURLYBRACKET = 259,
-    RIGHTCURLYBRACKET = 260,
-    ASIGNACION = 261,
-    SUBSTRACT = 262,
-    ADD = 263,
-    MULTIPLY = 264,
-    DIVIDE = 265,
-    INCREMENTO = 266,
-    DECREMENTO = 267,
-    COMMA = 268,
+    COMMA = 259,
+    LETFCURLYBRACKET = 260,
+    RIGHTCURLYBRACKET = 261,
+    ASIGNACION = 262,
+    SUBSTRACT = 263,
+    ADD = 264,
+    MULTIPLY = 265,
+    DIVIDE = 266,
+    INCREMENTO = 267,
+    DECREMENTO = 268,
     NUMBER = 269,
     BOOL = 270,
     STRING = 271,
@@ -113,7 +113,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 133 "interpreter.y" /* yacc.c:1909  */
@@ -132,8 +132,6 @@ union YYSTYPE
 
 #line 134 "interpreter.tab.h" /* yacc.c:1909  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
