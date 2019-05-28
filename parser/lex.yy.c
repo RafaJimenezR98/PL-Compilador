@@ -374,24 +374,24 @@ static yyconst flex_int16_t yy_accept[215] =
         0,    0,    0,    0,   72,   68,   18,   19,   68,   68,
        68,   68,   39,   40,   30,   28,   21,   29,   68,   31,
        22,   68,   20,   36,   37,   34,   68,   23,   23,   23,
-       23,   23,   23,   23,   23,   23,   23,   59,   64,   68,
+       23,   23,   23,   23,   23,   23,   23,   58,   64,   68,
        65,   67,   69,   70,   62,    0,   51,    0,   63,    0,
        66,    0,   60,    0,   41,    0,   42,    0,   22,    0,
-       22,   22,   57,    0,   57,   61,   35,   38,   33,    0,
-       43,   23,   53,   23,   23,   23,   23,   23,   23,   23,
-       23,   23,    5,   57,   57,   57,   57,   57,   57,   46,
-       47,   59,   32,   66,   26,   25,   24,   27,    0,   55,
+       22,   22,   53,    0,   53,   61,   35,   38,   33,    0,
+       43,   23,   54,   23,   23,   23,   23,   23,   23,   23,
+       23,   23,    5,   53,   53,   53,   53,   53,   53,   46,
+       47,   58,   32,   66,   26,   25,   24,   27,    0,   59,
 
-       57,   55,    0,    0,   56,   53,   23,   23,   23,   23,
-       23,   23,   23,   23,   23,   23,   23,   56,   57,   57,
-       57,   57,   48,   59,    0,   55,    0,    0,    0,    0,
-       22,   56,   58,   23,   23,   23,   56,   23,   23,    1,
-       23,   14,   17,   23,   23,   57,   45,   57,   44,   59,
-        0,   54,   52,   52,   53,   15,   23,   23,   23,   23,
-       23,   10,   13,   56,   23,   23,    7,   57,   57,    0,
-       52,   52,   53,   23,   23,   23,   23,    8,   23,   23,
-       23,   57,   50,   54,   52,   23,   23,   23,   23,   23,
-       23,   12,   49,    6,    3,   23,   16,   23,    9,   56,
+       53,   59,    0,    0,   54,   54,   23,   23,   23,   23,
+       23,   23,   23,   23,   23,   23,   23,   54,   53,   53,
+       53,   53,   48,   58,    0,   59,    0,    0,    0,    0,
+       22,   54,   52,   23,   23,   23,   54,   23,   23,    1,
+       23,   14,   17,   23,   23,   53,   45,   53,   44,   58,
+        0,   55,   57,   57,   56,   15,   23,   23,   23,   23,
+       23,   10,   13,   54,   23,   23,    7,   53,   53,    0,
+       57,   57,   56,   23,   23,   23,   23,    8,   23,   23,
+       23,   53,   50,   55,   57,   23,   23,   23,   23,   23,
+       23,   12,   49,    6,    3,   23,   16,   23,    9,   54,
 
        23,   23,   23,   23,   23,   23,   23,    2,   23,   11,
        23,   23,    4,    0
@@ -1343,77 +1343,77 @@ YY_RULE_SETUP
 case 52:
 YY_RULE_SETUP
 #line 293 "interpreter.l"
-{execerror("identificador mal escrito. No empieza por una letra, tiene varias _ seguidas y termina en _", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  Varias _ seguidas", yytext);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
 #line 294 "interpreter.l"
-{execerror("identificador mal escrito. Varias _ seguidas y termina en _", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  No empieza por una LETRA", yytext);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
 #line 295 "interpreter.l"
-{execerror("identificador mal escrito. No empieza por una letra y tiene varias _ seguidas", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  Termina en _", yytext);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
 #line 296 "interpreter.l"
-{execerror("identificador mal escrito. No empieza por una letra y termina en _", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA y tiene varias _ seguidas", yytext);}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
 #line 297 "interpreter.l"
-{execerror("identificador mal escrito. Termina en _", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  Varias _ seguidas y termina en _", yytext);}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
 #line 298 "interpreter.l"
-{execerror("identificador mal escrito. No empieza por una letra", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA, tiene varias _ seguidas y termina en _", yytext);}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
 #line 299 "interpreter.l"
-{execerror("identificador mal escrito. Varias _ seguidas", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  Solo se escribe _", yytext);}
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
 #line 300 "interpreter.l"
-{execerror("identificador mal escrito. Solo se escribe _", yytext);}
+{execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA y termina en _", yytext);}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 302 "interpreter.l"
+#line 304 "interpreter.l"
 {return POTENCIA;}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 304 "interpreter.l"
+#line 306 "interpreter.l"
 { return ASIGNACION; }		/* NEW in example 7 */
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 306 "interpreter.l"
+#line 308 "interpreter.l"
 { return DISTINTO; }		/* NEW in example 15 */
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 309 "interpreter.l"
+#line 311 "interpreter.l"
 { return Y_LOGICO; }				/* NEW in example 15 */
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 311 "interpreter.l"
+#line 313 "interpreter.l"
 { return LETFCURLYBRACKET; } 	/* NEW in example 17 */
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 313 "interpreter.l"
+#line 315 "interpreter.l"
 { return RIGHTCURLYBRACKET; }	/* NEW in example 17 */
 	YY_BREAK
 case 66:
 /* rule 66 can match eol */
 YY_RULE_SETUP
-#line 315 "interpreter.l"
+#line 317 "interpreter.l"
 {
 			for(int i = 0; yytext[i] != '\0'; i++)
                 	{
@@ -1452,7 +1452,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 351 "interpreter.l"
+#line 353 "interpreter.l"
 { /* The interpreter finishes when the symbol # is written at the beginning of the line */
 	/* std::cout << CLEAR_SCREEN; */
 	/*  PLACE(24,10); */
@@ -1467,7 +1467,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(ERROR):
-#line 363 "interpreter.l"
+#line 365 "interpreter.l"
 { /* The interpreter finishes when finds the end of file character */
 		/*  PLACE(24,10);
 	  	  std::cout <<  BICYAN;
@@ -1481,7 +1481,7 @@ case YY_STATE_EOF(ERROR):
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 375 "interpreter.l"
+#line 377 "interpreter.l"
 {
 									/* Any other character */
 									/* MODIFIIED in example 3 */
@@ -1497,7 +1497,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 388 "interpreter.l"
+#line 390 "interpreter.l"
 { /* MODIFIED in examples 5, 7, 15 */
 								  /* NEW in example 3 */
 								  /*
@@ -1510,7 +1510,7 @@ YY_RULE_SETUP
 case 70:
 /* rule 70 can match eol */
 YY_RULE_SETUP
-#line 397 "interpreter.l"
+#line 399 "interpreter.l"
 {
 								/* NEW in example 3 */
 								/* Rewind one position */
@@ -1525,7 +1525,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 408 "interpreter.l"
+#line 410 "interpreter.l"
 ECHO;
 	YY_BREAK
 #line 1532 "lex.yy.c"
@@ -2527,7 +2527,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 408 "interpreter.l"
+#line 410 "interpreter.l"
 
 
 
