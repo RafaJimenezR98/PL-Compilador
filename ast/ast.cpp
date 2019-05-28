@@ -1595,15 +1595,19 @@ void lp::IfStmt::evaluate()
 {
    // If the condition is true,
 	std::list<lp::Statement *>::iterator it;
- 	for (it = this->_statements1->begin(); it != this->_statements1->end(); it++){
- 		(*it)->evaluate();
- 	}
 
- 	if(this->_statements2 != NULL){
- 		for (it = this->_statements2->begin(); it != this->_statements2->end(); it++){
- 			(*it)->evaluate();
- 		}
- 	}
+	if (this->_cond->evaluateBool() == true ){
+		for (it = this->_statements1->begin(); it != this->_statements1->end(); it++){
+			(*it)->evaluate();
+		}
+	}
+	else{
+		if(this->_statements2 != NULL){
+	 		for (it = this->_statements2->begin(); it != this->_statements2->end(); it++){
+	 			(*it)->evaluate();
+	 		}
+	 	}
+	}
 }
 
 
@@ -1707,8 +1711,30 @@ void lp::ForStmt::evaluate()
  	double desde = this->_exp1->evaluateNumber();
  	double hasta = this->_exp2->evaluateNumber();
 
+	lp::Variable *firstVar = (lp::Variable *) table.getSymbol(this->_id);
+	lp::NumericVariable *n;
+
   	// Get the identifier in the table of symbols as NumericVariable
-	lp::NumericVariable *n = (lp::NumericVariable *) table.getSymbol(this->_id);
+		if (firstVar->getType() == NUMBER)
+		{
+				// Get the identifier in the table of symbols as NumericVariable
+			n = (lp::NumericVariable *) table.getSymbol(this->_id);
+
+			// Assignment the value to the identifier in the table of symbols
+			n->setValue(desde);
+		}
+		// The type of variable is not NUMBER
+		else
+		{
+			// Delete the variable from the table of symbols
+			table.eraseSymbol(this->_id);
+
+			// Insert the variable in the table of symbols as NumericVariable
+			// with the type NUMBER and the value
+			n = new lp::NumericVariable(this->_id,
+									VAR,NUMBER,desde);
+			table.installSymbol(n);
+		}
 
 	// Assignment the read value to the identifier in the table of symbols
 	n->setValue(desde);

@@ -116,7 +116,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 133 "interpreter.y" /* yacc.c:1909  */
+#line 135 "interpreter.y" /* yacc.c:1909  */
 
   char * identifier; 				 /* NEW in example 7 */
   double number;

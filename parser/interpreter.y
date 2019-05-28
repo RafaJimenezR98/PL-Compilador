@@ -89,6 +89,8 @@ int yylex();
 
 extern int lineNumber; //!< External line counter
 
+extern int control;
+
 /* NEW in example 15 */
 extern bool interactiveMode; //!< Control the interactive mode of execution of the interpreter
 
@@ -263,7 +265,7 @@ stmtlist:  /* empty: epsilon rule */
 			$$->push_back($2);
 
 			// Control the interative mode of execution of the interpreter
-			if (interactiveMode == true)
+			if ( (interactiveMode == true) && (control == 0) )
  			   $2->evaluate();
            }
 
@@ -345,47 +347,56 @@ stmt: SEMICOLON  /* Empty statement: ";" */
 	/*  NEW in example 17 */
 ;
 
+SimboloControl: {control++;}
+  ;
 
 	/*  NEW in example 17 */
 if:	/* Simple conditional statement */
-	IF cond THEN stmtlist END_IF
+	IF  SimboloControl cond THEN stmtlist END_IF
     {
 		// Create a new if statement node
-		$$ = new lp::IfStmt($2, $4);
+		$$ = new lp::IfStmt($3, $5);
+
+    control--;
 	}
 
 	/* Compound conditional statement */
-	| IF cond THEN stmtlist ELSE stmtlist END_IF
+	| IF SimboloControl cond THEN stmtlist ELSE stmtlist END_IF
 	 {
 		// Create a new if statement node
-		$$ = new lp::IfStmt($2, $4, $6);
+		$$ = new lp::IfStmt($3, $5, $7);
+    control--;
 	 }
 ;
 
 	/*  NEW in example 17 */
-while:  WHILE cond DO stmtlist END_WHILE
+while:  WHILE SimboloControl cond DO stmtlist END_WHILE
 		{
 			// Create a new while statement node
-			$$ = new lp::WhileStmt($2, $4);
+			$$ = new lp::WhileStmt($3, $5);
+      control--;
         }
 ;
 
-dowhile:  REPETIR stmtlist UNTIL cond
+dowhile:  REPETIR SimboloControl stmtlist UNTIL cond
 		{
 			// Create a new while statement node
-			$$ = new lp::DoWhileStmt($4, $2);
+			$$ = new lp::DoWhileStmt($5, $3);
+      control--;
         }
 ;
 
-for:  FOR VAR DESDE exp UNTIL exp PASS exp DO stmtlist END_FOR
+for:  FOR SimboloControl VAR DESDE exp UNTIL exp PASS exp DO stmtlist END_FOR
     {
     // Create a new while statement node
-      $$ = new lp::ForStmt($2, $4, $6, $8, $10);
+      $$ = new lp::ForStmt($3, $5, $7, $9, $11);
+      control--;
         }
-    |  FOR VAR DESDE exp UNTIL exp DO stmtlist END_FOR
+    |  FOR SimboloControl VAR DESDE exp UNTIL exp DO stmtlist END_FOR
   		{
   			// Create a new while statement node
-  			$$ = new lp::ForStmt($2, $4, $6, $8);
+  			$$ = new lp::ForStmt($3, $5, $7, $9);
+        control--;
           }
 ;
 

@@ -1,11 +1,11 @@
-/*! 
+/*!
   \file interpreter.cpp
   \brief Main program
 */
 
 /*!
  \mainpage Flex and Bison: example 17
- \author   
+ \author
  \date     2018 - 4 - 26
  \version  1.0
  \note Novelties
@@ -21,8 +21,8 @@
 //
 
 /////////////////////////////
-/* 
-  NEW in example 16 
+/*
+  NEW in example 16
   AST class
   IMPORTANT: must be written before interpreter.tab.h
 */
@@ -35,30 +35,31 @@ int lineNumber = 1; //!< Line counter
 
 /* NEW in example 15 */
 bool interactiveMode; //!< Control the interactive mode of execution of the interpreter
+int control = 0;
 
 
 // New in example 2
-extern FILE * yyin; //!< Standard input device for yylex() 
+extern FILE * yyin; //!< Standard input device for yylex()
 std::string progname; //!<  Program name
 //
 
 
 //////////////////////////////////////////////
-// NEW in example 6 
+// NEW in example 6
 
-// Use for recovery of runtime errors 
+// Use for recovery of runtime errors
 #include <setjmp.h>
 #include <signal.h>
 
-// Error recovery functions 
+// Error recovery functions
 #include "error/error.hpp"
 
 
 lp::AST *root; //!< Root of the abstract syntax tree AST
-///////////////////////////////////////////// 
+/////////////////////////////////////////////
 
 //////////////////////////////////////////////
-// NEW in example 10 
+// NEW in example 10
 
 #include "table/init.hpp"
 
@@ -68,10 +69,10 @@ lp::AST *root; //!< Root of the abstract syntax tree AST
     This is an array type capable of storing the information of a calling environment to be restored later.
    This information is filled by calling macro setjmp and can be restored by calling function longjmp.
 */
-extern jmp_buf begin; //!<  It enables recovery of runtime errors 
+extern jmp_buf begin; //!<  It enables recovery of runtime errors
 
 //////////////////////////////////////////////
-// NEW in example 7 
+// NEW in example 7
 
 #include "table/table.hpp"
 
@@ -85,7 +86,7 @@ lp::Table table; //!< Table of Symbols
 
 //! \name Main program
 
-/*! 
+/*!
 	\brief  Main function
 	\param  argc: number of command line parameters
 	\param  argv: values of command line parameters
@@ -97,15 +98,15 @@ int main(int argc, char *argv[])
 {
  // Option -t needed
  // yydebug = 1;
- 
- /* 
-   If the input file exists 
-      then 
+
+ /*
+   If the input file exists
+      then
            it is set as input device for yylex();
       otherwise
             the input device is the keyboard (stdin)
  */
- if (argc == 2) 
+ if (argc == 2)
  {
      yyin = fopen(argv[1],"r");
 
@@ -116,14 +117,14 @@ else
 	interactiveMode = true;
  }
 
- // Copy the name of the interpreter 
+ // Copy the name of the interpreter
 	progname = argv[0];
 
- /* Number of decimal places */ 
+ /* Number of decimal places */
  std::cout.precision(7);
 
- /* 
-   Table of symbols initialization 
+ /*
+   Table of symbols initialization
    Must be written before the recovery sentence: setjmp
  */
    init(table);
@@ -147,6 +148,3 @@ else
  /* End of program */
  return 0;
 }
-
-
-

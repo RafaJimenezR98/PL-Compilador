@@ -290,14 +290,16 @@ lugar (?i:_lugar)W in example 7 */
 
 {comentario} { }
 
-{identificador_mal6} {execerror("identificador mal escrito. No empieza por una letra, tiene varias _ seguidas y termina en _", yytext);}
-{identificador_mal5} {execerror("identificador mal escrito. Varias _ seguidas y termina en _", yytext);}
-{identificador_mal4} {execerror("identificador mal escrito. No empieza por una letra y tiene varias _ seguidas", yytext);}
-{identificador_mal8} {execerror("identificador mal escrito. No empieza por una letra y termina en _", yytext);}
-{identificador_mal3} {execerror("identificador mal escrito. Termina en _", yytext);}
-{identificador_mal2} {execerror("identificador mal escrito. No empieza por una letra", yytext);}
-{identificador_mal1} {execerror("identificador mal escrito. Varias _ seguidas", yytext);}
-{identificador_mal7} {execerror("identificador mal escrito. Solo se escribe _", yytext);}
+{identificador_mal1} {execerror("IDENTIFICADOR INCORRECTO:  Varias _ seguidas", yytext);}
+{identificador_mal2} {execerror("IDENTIFICADOR INCORRECTO:  No empieza por una LETRA", yytext);}
+{identificador_mal3} {execerror("IDENTIFICADOR INCORRECTO:  Termina en _", yytext);}
+{identificador_mal4} {execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA y tiene varias _ seguidas", yytext);}
+{identificador_mal5} {execerror("IDENTIFICADOR INCORRECTO:  Varias _ seguidas y termina en _", yytext);}
+{identificador_mal6} {execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA, tiene varias _ seguidas y termina en _", yytext);}
+{identificador_mal7} {execerror("IDENTIFICADOR INCORRECTO:  Solo se escribe _", yytext);}
+{identificador_mal8} {execerror("IDENTIFICADOR INCORRECTO:  No empieza por LETRA y termina en _", yytext);}
+
+
 
 "**"      {return POTENCIA;}
 
@@ -348,7 +350,7 @@ lugar (?i:_lugar)W in example 7 */
 			return STRING;
 		}
 
-^# { /* The interpreter finishes when the symbol # is written at the beginning of the line */
+^\$ { /* The interpreter finishes when the symbol # is written at the beginning of the line */
 	/* std::cout << CLEAR_SCREEN; */
 	/*  PLACE(24,10); */
   	  std::cout <<  BIYELLOW;
