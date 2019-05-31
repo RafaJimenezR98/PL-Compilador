@@ -4,13 +4,10 @@
 */
 
 /*!
- \mainpage Flex and Bison: example 17
- \author
- \date     2018 - 4 - 26
+ \mainpage Flex and Bison: Trabajo Final
+ \author Rafael Jimenez Ramos y Adrian Lopez Guerrero
+ \date     2019 - 5 - 31
  \version  1.0
- \note Novelties
-	+ AST: intermidiate code
-	+ New statements: if, while, block
 */
 
 

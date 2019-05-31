@@ -1,4 +1,4 @@
-NAME=ipe
+NAME=interpreter
 
 # Compiler
 CPP = g++
@@ -42,10 +42,10 @@ INCLUDES = ./parser/interpreter.tab.h ./error/error.hpp \
 
 
 #Modified in examples 7, 16
-$(NAME).exe :  parser-dir error-dir table-dir ast-dir $(OBJECTS)
-	@echo "Generating " $(NAME).exe
+ipe.exe :  parser-dir error-dir table-dir ast-dir $(OBJECTS)
+	@echo "Generating " ipe.exe
 	@$(CPP) $(OBJECTS) $(OBJECTS-PARSER) $(OBJECTS-ERROR)  $(OBJECTS-TABLE)  $(OBJECTS-AST) \
-	$(LFLAGS) -o $(NAME).exe
+	$(LFLAGS) -o ipe.exe
 
 
 # Main program
@@ -101,8 +101,8 @@ doc: Doxyfile
 clean:
 	@echo "Deleting html"
 	@rm -rf html
-	@echo "Deleting " $(OBJECTS)  $(NAME).exe  *~
-	@rm -f $(OBJECTS) $(NAME).exe *~
+	@echo "Deleting " $(OBJECTS)  ipe.exe  *~
+	@rm -f $(OBJECTS) ipe.exe *~
 	@echo
 	@make -C parser/ clean
 	@echo
