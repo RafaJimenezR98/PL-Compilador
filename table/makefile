@@ -92,6 +92,10 @@ builtinParameter2.o: builtinParameter2.cpp builtinParameter2.hpp builtin.hpp sym
 stringVariable.o: stringVariable.cpp stringVariable.hpp variable.hpp symbol.hpp symbolInterface.hpp
 	@echo "Compiling " stringVariable.cpp
 	@$(CPP) $(CFLAGS) stringVariable.cpp	
+	
+mathFunction.o: mathFunction.cpp mathFunction.hpp
+	@echo "Compiling " mathFunction.cpp
+	@$(CPP) $(CFLAGS) mathFunction.cpp	
 
 #######################################################
 # NEW in example 10

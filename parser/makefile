@@ -62,6 +62,7 @@ all: $(OBJECTS)
 # Lexical analyzer
 # -Wno-unused-function, -Wno-sign-compare: these error messages are not displayed
 lex.yy.o:  lex.yy.c $(NAME).tab.h
+	@echo "Generating: " $@
 	$(CPP) $(CFLAGS)  -Wno-unused-function  -Wno-sign-compare $<
 
 lex.yy.c: $(NAME).l $(NAME).tab.h $(INCLUDES)

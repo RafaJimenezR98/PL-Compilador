@@ -1675,7 +1675,7 @@ void lp::DoWhileStmt::evaluate()
 	  for (it = this->_statements1->begin(); it != _statements1->end(); it++){
 		  (*it)->evaluate();
 	  }
-  }while (this->_cond->evaluateBool() == true);
+  }while (this->_cond->evaluateBool() == false);
 
 }
 
