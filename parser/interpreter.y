@@ -198,8 +198,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
              REPETIR UNTIL
              FOR DESDE PASS END_FOR
              PRINT PRINT_STRING READ READ_STRING
-             BORRAR LUGAR
-             RAND CONCATENACION
+             BORRAR LUGAR 
 
 /* Left associativity */
 
@@ -215,7 +214,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /*******************************************************/
 
 
-%left SUMA RESTA
+%left SUMA RESTA CONCATENACION
 
 
 %left PRODUCTO DIVISION MODULO DIVISION_ENTERA
