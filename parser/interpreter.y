@@ -9,13 +9,13 @@
 #include <string>
 
 /*******************************************/
-/* NEW in example 5 */
+
 /* pow */
 #include <math.h>
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 6 */
+
 /* Use for recovery of runtime errors */
 #include <setjmp.h>
 #include <signal.h>
@@ -30,7 +30,7 @@
 
 /*******************************************/
 /*
-  NEW in example 16
+
   AST class
   IMPORTANT: this file must be before init.hpp
 */
@@ -38,7 +38,7 @@
 
 
 /*******************************************/
-/* NEW in example 7 */
+
 /* Table of symbol */
 #include "../table/table.hpp"
 /*******************************************/
@@ -47,26 +47,23 @@
 #include "../table/numericVariable.hpp"
 /*******************************************/
 
-/* NEW in example 15 */
+
 #include "../table/logicalVariable.hpp"
 
 /*******************************************/
-/* NEW in example 11 */
+
 #include "../table/numericConstant.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 15 */
 #include "../table/logicalConstant.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 13 */
 #include "../table/builtinParameter1.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 14 */
 #include "../table/builtinParameter0.hpp"
 #include "../table/builtinParameter2.hpp"
 /*******************************************/
@@ -75,7 +72,6 @@
 
 
 /*******************************************/
-/* NEW in example 10 */
 #include "../table/init.hpp"
 /*******************************************/
 
@@ -91,17 +87,17 @@ extern int lineNumber; //!< External line counter
 
 extern int control;
 
-/* NEW in example 15 */
+
 extern bool interactiveMode; //!< Control the interactive mode of execution of the interpreter
 
 
 /***********************************************************/
-/* NEW in example 2 */
+
 extern std::string progname; //!<  Program name
 /***********************************************************/
 
 /*******************************************/
-/* NEW in example 6 */
+
 /*
  jhmp_buf
     This is an array type capable of storing the information of a calling environment to be restored later.
@@ -112,11 +108,11 @@ jmp_buf begin; //!<  It enables recovery of runtime errors
 
 
 /*******************************************/
-/* NEW in example 7 */
+
 extern lp::Table table; //!< Extern Table of Symbols
 
 /*******************************************/
-/* NEW in example 16 */
+
 extern lp::AST *root; //!< External root of the abstract syntax tree AST
 
 %}
@@ -131,31 +127,31 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 
 /*******************************************/
 /* Data type YYSTYPE  */
-/* NEW in example 4 */
+
 %union {
-  char * identifier; 				 /* NEW in example 7 */
+  char * identifier; 				 
   double number;
-  bool logic;						 /* NEW in example 15 */
+  bool logic;						 
 
   std::string *stringvariable;
 
-  lp::ExpNode *expNode;  			 /* NEW in example 16 */
-  std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
-  std::list<lp::Statement *> *stmts; /* NEW in example 16 */
-  lp::Statement *st;				 /* NEW in example 16 */
-  lp::AST *prog;					 /* NEW in example 16 */
+  lp::ExpNode *expNode;  			 
+  std::list<lp::ExpNode *>  *parameters;   
+  std::list<lp::Statement *> *stmts; 
+  lp::Statement *st;				 
+  lp::AST *prog;					 
 }
 
 /* Type of the non-terminal symbols */
-// New in example 17: cond
+
 %type <expNode> exp cond
 
-/* New in example 14 */
+
 %type <parameters> listOfExp  restOfListOfExp
 
 %type <stmts> stmtlist
 
-// New in example 17: if, while, block
+
 %type <st> stmt asgn print read if while dowhile for borrar lugar escribir_cadena leer_cadena
 
 %type <prog> program
@@ -165,27 +161,26 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /* Minimum precedence */
 
 /*******************************************/
-/* NEW in example 5 */
+
 %token SEMICOLON
 /*******************************************/
 
-/* NEW in example 14 */
+
 %token COMMA
 
-// NEW in example 17
 %token LETFCURLYBRACKET RIGHTCURLYBRACKET
 
-/* NEW in example 7 */
+
 %right ASIGNACION SUBSTRACT ADD MULTIPLY DIVIDE INCREMENTO DECREMENTO
 
 
 /*******************************************/
-/* MODIFIED in example 4 */
+
 %token <number> NUMBER
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 15 */
+
 %token <logic> BOOL
 
 %token <stringvariable> STRING
@@ -195,7 +190,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 
  /* %token <string> STRING */
 
-/* MODIFIED in examples 11, 13 */
+
 %token <identifier> IDENTIFIER VAR NUMERICVARIABLE STRINGVARIABLE INDEFINIDA CONSTANTE NUMERICCONSTANT BUILTIN
 
 %token       IF THEN ELSE END_IF
@@ -209,7 +204,7 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 /* Left associativity */
 
 /*******************************************************/
-/* NEW in example 15 */
+
 %left O_LOGICO
 
 %left Y_LOGICO
@@ -219,10 +214,10 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %left NEGACION
 /*******************************************************/
 
-/* MODIFIED in example 3 */
+
 %left SUMA RESTA
 
-/* MODIFIED in example 5 */
+
 %left PRODUCTO DIVISION MODULO DIVISION_ENTERA
 
 %left LPAREN RPAREN
@@ -230,14 +225,12 @@ extern lp::AST *root; //!< External root of the abstract syntax tree AST
 %nonassoc  UNARIO
 
 // Maximum precedence
-/* MODIFIED in example 5 */
 %right POTENCIA
 
 
 %%
 //! \name Grammar rules
 
-/* MODIFIED  Grammar in example 16 */
 
 program : stmtlist
 		  {
@@ -322,13 +315,11 @@ stmt: SEMICOLON  /* Empty statement: ";" */
      		// Default action
      		// $$ = $1;
      	}
-	/*  NEW in example 17 */
 	| if
 	 {
 		// Default action
 		// $$ = $1;
 	 }
-	/*  NEW in example 17 */
 	| while
 	 {
 		// Default action
@@ -344,13 +335,12 @@ stmt: SEMICOLON  /* Empty statement: ";" */
  		// Default action
  		// $$ = $1;
  	 }
-	/*  NEW in example 17 */
 ;
 
 SimboloControl: {control++;}
   ;
 
-	/*  NEW in example 17 */
+
 if:	/* Simple conditional statement */
 	IF  SimboloControl cond THEN stmtlist END_IF
     {
@@ -369,7 +359,7 @@ if:	/* Simple conditional statement */
 	 }
 ;
 
-	/*  NEW in example 17 */
+
 while:  WHILE SimboloControl cond DO stmtlist END_WHILE
 		{
 			// Create a new while statement node
@@ -400,7 +390,7 @@ for:  FOR SimboloControl VAR DESDE exp UNTIL exp PASS exp DO stmtlist END_FOR
           }
 ;
 
-	/*  NEW in example 17 */
+
 cond: 	LPAREN exp RPAREN
 		{
 			$$ = $2;
@@ -420,12 +410,12 @@ asgn:   VAR ASIGNACION exp
 			$$ = new lp::AssignmentStmt($1, (lp::AssignmentStmt *) $3);
 		}
 
-	   /* NEW in example 11 */
+
 	| CONSTANTE ASIGNACION exp
 		{
  			execerror("Semantic error in assignment: it is not allowed to modify a constant ", $1);
 		}
-	   /* NEW in example 11 */
+
 	| CONSTANTE ASIGNACION asgn
 		{
  			execerror("Semantic error in multiple assignment: it is not allowed to modify a constant ",$1);
@@ -453,7 +443,7 @@ read:  READ LPAREN VAR RPAREN
 			 $$ = new lp::ReadStmt($3);
 		}
 
-  	  /* NEW rule in example 11 */
+
 	| READ LPAREN CONSTANTE RPAREN
 		{
  			execerror("Semantic error in \"read statement\": it is not allowed to modify a constant ",$3);

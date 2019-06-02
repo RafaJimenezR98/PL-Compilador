@@ -68,13 +68,13 @@
 #include <string>
 
 /*******************************************/
-/* NEW in example 5 */
+
 /* pow */
 #include <math.h>
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 6 */
+
 /* Use for recovery of runtime errors */
 #include <setjmp.h>
 #include <signal.h>
@@ -89,7 +89,7 @@
 
 /*******************************************/
 /*
-  NEW in example 16
+
   AST class
   IMPORTANT: this file must be before init.hpp
 */
@@ -97,7 +97,7 @@
 
 
 /*******************************************/
-/* NEW in example 7 */
+
 /* Table of symbol */
 #include "../table/table.hpp"
 /*******************************************/
@@ -106,26 +106,23 @@
 #include "../table/numericVariable.hpp"
 /*******************************************/
 
-/* NEW in example 15 */
+
 #include "../table/logicalVariable.hpp"
 
 /*******************************************/
-/* NEW in example 11 */
+
 #include "../table/numericConstant.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 15 */
 #include "../table/logicalConstant.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 13 */
 #include "../table/builtinParameter1.hpp"
 /*******************************************/
 
 /*******************************************/
-/* NEW in example 14 */
 #include "../table/builtinParameter0.hpp"
 #include "../table/builtinParameter2.hpp"
 /*******************************************/
@@ -134,7 +131,6 @@
 
 
 /*******************************************/
-/* NEW in example 10 */
 #include "../table/init.hpp"
 /*******************************************/
 
@@ -150,17 +146,17 @@ extern int lineNumber; //!< External line counter
 
 extern int control;
 
-/* NEW in example 15 */
+
 extern bool interactiveMode; //!< Control the interactive mode of execution of the interpreter
 
 
 /***********************************************************/
-/* NEW in example 2 */
+
 extern std::string progname; //!<  Program name
 /***********************************************************/
 
 /*******************************************/
-/* NEW in example 6 */
+
 /*
  jhmp_buf
     This is an array type capable of storing the information of a calling environment to be restored later.
@@ -171,15 +167,15 @@ jmp_buf begin; //!<  It enables recovery of runtime errors
 
 
 /*******************************************/
-/* NEW in example 7 */
+
 extern lp::Table table; //!< Extern Table of Symbols
 
 /*******************************************/
-/* NEW in example 16 */
+
 extern lp::AST *root; //!< External root of the abstract syntax tree AST
 
 
-#line 183 "interpreter.tab.c" /* yacc.c:339  */
+#line 179 "interpreter.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -285,21 +281,21 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 135 "interpreter.y" /* yacc.c:355  */
+#line 131 "interpreter.y" /* yacc.c:355  */
 
-  char * identifier; 				 /* NEW in example 7 */
+  char * identifier; 				 
   double number;
-  bool logic;						 /* NEW in example 15 */
+  bool logic;						 
 
   std::string *stringvariable;
 
-  lp::ExpNode *expNode;  			 /* NEW in example 16 */
-  std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
-  std::list<lp::Statement *> *stmts; /* NEW in example 16 */
-  lp::Statement *st;				 /* NEW in example 16 */
-  lp::AST *prog;					 /* NEW in example 16 */
+  lp::ExpNode *expNode;  			 
+  std::list<lp::ExpNode *>  *parameters;   
+  std::list<lp::Statement *> *stmts; 
+  lp::Statement *st;				 
+  lp::AST *prog;					 
 
-#line 303 "interpreter.tab.c" /* yacc.c:355  */
+#line 299 "interpreter.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -316,7 +312,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 320 "interpreter.tab.c" /* yacc.c:358  */
+#line 316 "interpreter.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -620,13 +616,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   242,   242,   256,   261,   273,   284,   289,   294,   299,
-     305,   310,   315,   320,   326,   332,   337,   342,   350,   355,
-     364,   373,   381,   389,   395,   404,   411,   417,   424,   429,
-     436,   443,   450,   457,   463,   470,   477,   484,   490,   496,
-     502,   508,   514,   520,   526,   532,   538,   545,   550,   556,
-     562,   569,   575,   622,   628,   634,   640,   646,   652,   658,
-     664,   670,   680,   685,   696,   701
+       0,   235,   235,   249,   254,   266,   277,   282,   287,   292,
+     298,   303,   308,   313,   318,   323,   328,   333,   340,   345,
+     354,   363,   371,   379,   385,   394,   401,   407,   414,   419,
+     426,   433,   440,   447,   453,   460,   467,   474,   480,   486,
+     492,   498,   504,   510,   516,   522,   528,   535,   540,   546,
+     552,   559,   565,   612,   618,   624,   630,   636,   642,   648,
+     654,   660,   670,   675,   686,   691
 };
 #endif
 
@@ -1596,7 +1592,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 243 "interpreter.y" /* yacc.c:1646  */
+#line 236 "interpreter.y" /* yacc.c:1646  */
     {
 		    // Create a new AST
 			(yyval.prog) = new lp::AST((yyvsp[0].stmts));
@@ -1607,20 +1603,20 @@ yyreduce:
 			// End of parsing
 			//	return 1;
 		  }
-#line 1611 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1607 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 256 "interpreter.y" /* yacc.c:1646  */
+#line 249 "interpreter.y" /* yacc.c:1646  */
     {
 			// create a empty list of statements
 			(yyval.stmts) = new std::list<lp::Statement *>();
 		  }
-#line 1620 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1616 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 262 "interpreter.y" /* yacc.c:1646  */
+#line 255 "interpreter.y" /* yacc.c:1646  */
     {
 			// copy up the list and add the stmt to it
 			(yyval.stmts) = (yyvsp[-1].stmts);
@@ -1630,11 +1626,11 @@ yyreduce:
 			if ( (interactiveMode == true) && (control == 0) )
  			   (yyvsp[0].st)->evaluate();
            }
-#line 1634 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1630 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 274 "interpreter.y" /* yacc.c:1646  */
+#line 267 "interpreter.y" /* yacc.c:1646  */
     {
 			// just copy up the stmtlist when an error occurs
 			(yyval.stmts) = (yyvsp[-1].stmts);
@@ -1642,429 +1638,429 @@ yyreduce:
 			// The previous look-ahead token ought to be discarded with `yyclearin;'
 			yyclearin;
            }
-#line 1646 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1642 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 285 "interpreter.y" /* yacc.c:1646  */
+#line 278 "interpreter.y" /* yacc.c:1646  */
     {
 		// Create a new empty statement node
 		(yyval.st) = new lp::EmptyStmt();
 	  }
-#line 1655 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1651 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 290 "interpreter.y" /* yacc.c:1646  */
+#line 283 "interpreter.y" /* yacc.c:1646  */
     {
 		// Default action
 		// $$ = $1;
 	  }
-#line 1664 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1660 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 295 "interpreter.y" /* yacc.c:1646  */
+#line 288 "interpreter.y" /* yacc.c:1646  */
     {
 		// Default action
 		// $$ = $1;
 	  }
-#line 1673 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1669 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 300 "interpreter.y" /* yacc.c:1646  */
+#line 293 "interpreter.y" /* yacc.c:1646  */
     {
 		// Default action
 		// $$ = $1;
 	  }
-#line 1682 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1678 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 306 "interpreter.y" /* yacc.c:1646  */
+#line 299 "interpreter.y" /* yacc.c:1646  */
     {
  		// Default action
  		// $$ = $1;
  	 }
-#line 1691 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1687 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 311 "interpreter.y" /* yacc.c:1646  */
+#line 304 "interpreter.y" /* yacc.c:1646  */
     {
  		// Default action
  		// $$ = $1;
  	 }
-#line 1700 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1696 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 316 "interpreter.y" /* yacc.c:1646  */
+#line 309 "interpreter.y" /* yacc.c:1646  */
     {
   		// Default action
   		// $$ = $1;
   	 }
-#line 1709 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1705 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 321 "interpreter.y" /* yacc.c:1646  */
+#line 314 "interpreter.y" /* yacc.c:1646  */
     {
      		// Default action
      		// $$ = $1;
      	}
-#line 1718 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1714 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 327 "interpreter.y" /* yacc.c:1646  */
+#line 319 "interpreter.y" /* yacc.c:1646  */
     {
 		// Default action
 		// $$ = $1;
 	 }
-#line 1727 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1723 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 333 "interpreter.y" /* yacc.c:1646  */
+#line 324 "interpreter.y" /* yacc.c:1646  */
     {
 		// Default action
 		// $$ = $1;
 	 }
-#line 1736 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1732 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 338 "interpreter.y" /* yacc.c:1646  */
+#line 329 "interpreter.y" /* yacc.c:1646  */
     {
  		// Default action
  		// $$ = $1;
  	 }
-#line 1745 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1741 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 343 "interpreter.y" /* yacc.c:1646  */
+#line 334 "interpreter.y" /* yacc.c:1646  */
     {
  		// Default action
  		// $$ = $1;
  	 }
-#line 1754 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1750 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 350 "interpreter.y" /* yacc.c:1646  */
+#line 340 "interpreter.y" /* yacc.c:1646  */
     {control++;}
-#line 1760 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1756 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 356 "interpreter.y" /* yacc.c:1646  */
+#line 346 "interpreter.y" /* yacc.c:1646  */
     {
 		// Create a new if statement node
 		(yyval.st) = new lp::IfStmt((yyvsp[-3].expNode), (yyvsp[-1].stmts));
 
     control--;
 	}
-#line 1771 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1767 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 365 "interpreter.y" /* yacc.c:1646  */
+#line 355 "interpreter.y" /* yacc.c:1646  */
     {
 		// Create a new if statement node
 		(yyval.st) = new lp::IfStmt((yyvsp[-5].expNode), (yyvsp[-3].stmts), (yyvsp[-1].stmts));
     control--;
 	 }
-#line 1781 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1777 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 374 "interpreter.y" /* yacc.c:1646  */
+#line 364 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new while statement node
 			(yyval.st) = new lp::WhileStmt((yyvsp[-3].expNode), (yyvsp[-1].stmts));
       control--;
         }
-#line 1791 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1787 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 382 "interpreter.y" /* yacc.c:1646  */
+#line 372 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new while statement node
 			(yyval.st) = new lp::DoWhileStmt((yyvsp[0].expNode), (yyvsp[-2].stmts));
       control--;
         }
-#line 1801 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1797 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 390 "interpreter.y" /* yacc.c:1646  */
+#line 380 "interpreter.y" /* yacc.c:1646  */
     {
     // Create a new while statement node
       (yyval.st) = new lp::ForStmt((yyvsp[-9].identifier), (yyvsp[-7].expNode), (yyvsp[-5].expNode), (yyvsp[-3].expNode), (yyvsp[-1].stmts));
       control--;
         }
-#line 1811 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1807 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 396 "interpreter.y" /* yacc.c:1646  */
+#line 386 "interpreter.y" /* yacc.c:1646  */
     {
   			// Create a new while statement node
   			(yyval.st) = new lp::ForStmt((yyvsp[-7].identifier), (yyvsp[-5].expNode), (yyvsp[-3].expNode), (yyvsp[-1].stmts));
         control--;
           }
-#line 1821 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1817 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 405 "interpreter.y" /* yacc.c:1646  */
+#line 395 "interpreter.y" /* yacc.c:1646  */
     {
 			(yyval.expNode) = (yyvsp[-1].expNode);
 		}
-#line 1829 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1825 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 412 "interpreter.y" /* yacc.c:1646  */
+#line 402 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new assignment node
 			(yyval.st) = new lp::AssignmentStmt((yyvsp[-2].identifier), (yyvsp[0].expNode));
 		}
-#line 1838 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1834 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 418 "interpreter.y" /* yacc.c:1646  */
+#line 408 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new assignment node
 			(yyval.st) = new lp::AssignmentStmt((yyvsp[-2].identifier), (lp::AssignmentStmt *) (yyvsp[0].st));
 		}
-#line 1847 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1843 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 425 "interpreter.y" /* yacc.c:1646  */
+#line 415 "interpreter.y" /* yacc.c:1646  */
     {
  			execerror("Semantic error in assignment: it is not allowed to modify a constant ", (yyvsp[-2].identifier));
 		}
-#line 1855 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1851 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 430 "interpreter.y" /* yacc.c:1646  */
+#line 420 "interpreter.y" /* yacc.c:1646  */
     {
  			execerror("Semantic error in multiple assignment: it is not allowed to modify a constant ",(yyvsp[-2].identifier));
 		}
-#line 1863 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1859 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 437 "interpreter.y" /* yacc.c:1646  */
+#line 427 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new print node
 			 (yyval.st) = new lp::PrintStmt((yyvsp[-1].expNode));
 		}
-#line 1872 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1868 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 444 "interpreter.y" /* yacc.c:1646  */
+#line 434 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new print node
 			 (yyval.st) = new lp::PrintStringStmt((yyvsp[-1].expNode));
 		}
-#line 1881 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1877 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 451 "interpreter.y" /* yacc.c:1646  */
+#line 441 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new read node
 			 (yyval.st) = new lp::ReadStmt((yyvsp[-1].identifier));
 		}
-#line 1890 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1886 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 458 "interpreter.y" /* yacc.c:1646  */
+#line 448 "interpreter.y" /* yacc.c:1646  */
     {
  			execerror("Semantic error in \"read statement\": it is not allowed to modify a constant ",(yyvsp[-1].identifier));
 		}
-#line 1898 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1894 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 464 "interpreter.y" /* yacc.c:1646  */
+#line 454 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new read node
 			 (yyval.st) = new lp::ReadStringStmt((yyvsp[-1].identifier));
 		}
-#line 1907 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1903 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 471 "interpreter.y" /* yacc.c:1646  */
+#line 461 "interpreter.y" /* yacc.c:1646  */
     {
 
       (yyval.st) = new lp::DeleteStmt();
 
     }
-#line 1917 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1913 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 478 "interpreter.y" /* yacc.c:1646  */
+#line 468 "interpreter.y" /* yacc.c:1646  */
     {
 
       (yyval.st) = new lp::PlaceStmt((yyvsp[-3].expNode), (yyvsp[-1].expNode));
 
     }
-#line 1927 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1923 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 485 "interpreter.y" /* yacc.c:1646  */
+#line 475 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new number node
 			(yyval.expNode) = new lp::NumberNode((yyvsp[0].number));
 		}
-#line 1936 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1932 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 491 "interpreter.y" /* yacc.c:1646  */
+#line 481 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new plus node
 			 (yyval.expNode) = new lp::PlusNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
 		 }
-#line 1945 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1941 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 497 "interpreter.y" /* yacc.c:1646  */
+#line 487 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new minus node
 			(yyval.expNode) = new lp::MinusNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
 		}
-#line 1954 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1950 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 503 "interpreter.y" /* yacc.c:1646  */
+#line 493 "interpreter.y" /* yacc.c:1646  */
     {
 			// Create a new multiplication node
 			(yyval.expNode) = new lp::MultiplicationNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
 		}
-#line 1963 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1959 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 509 "interpreter.y" /* yacc.c:1646  */
+#line 499 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new division node
 		  (yyval.expNode) = new lp::DivisionNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
 	   }
-#line 1972 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1968 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 515 "interpreter.y" /* yacc.c:1646  */
+#line 505 "interpreter.y" /* yacc.c:1646  */
     {
    		 // Create a new division node
    		 (yyval.expNode) = new lp::DivisionEnteraNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
    	}
-#line 1981 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1977 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 521 "interpreter.y" /* yacc.c:1646  */
+#line 511 "interpreter.y" /* yacc.c:1646  */
     {
 		    // just copy up the expression node
 			(yyval.expNode) = (yyvsp[-1].expNode);
 		 }
-#line 1990 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1986 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 527 "interpreter.y" /* yacc.c:1646  */
+#line 517 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new unary plus node
   		  (yyval.expNode) = new lp::UnaryPlusNode((yyvsp[0].expNode));
 		}
-#line 1999 "interpreter.tab.c" /* yacc.c:1646  */
+#line 1995 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 533 "interpreter.y" /* yacc.c:1646  */
+#line 523 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new unary minus node
   		  (yyval.expNode) = new lp::UnaryMinusNode((yyvsp[0].expNode));
 		}
-#line 2008 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2004 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 539 "interpreter.y" /* yacc.c:1646  */
+#line 529 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new modulo node
 
 		  (yyval.expNode) = new lp::ModuloNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
        }
-#line 2018 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2014 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 546 "interpreter.y" /* yacc.c:1646  */
+#line 536 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new power node
   		  (yyval.expNode) = new lp::PowerNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
 		}
-#line 2027 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2023 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 551 "interpreter.y" /* yacc.c:1646  */
+#line 541 "interpreter.y" /* yacc.c:1646  */
     {
   		  // Create a new power node
     		  (yyval.expNode) = new lp::ConcatNode((yyvsp[-2].expNode), (yyvsp[0].expNode));
   		}
-#line 2036 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2032 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 557 "interpreter.y" /* yacc.c:1646  */
+#line 547 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new variable node
 		  (yyval.expNode) = new lp::VariableNode((yyvsp[0].identifier));
 		}
-#line 2045 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2041 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 563 "interpreter.y" /* yacc.c:1646  */
+#line 553 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new constant node
 		  (yyval.expNode) = new lp::ConstantNode((yyvsp[0].identifier));
 
 		}
-#line 2055 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2051 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 570 "interpreter.y" /* yacc.c:1646  */
+#line 560 "interpreter.y" /* yacc.c:1646  */
     {
   			// Create a new plus node
   			 (yyval.expNode) = new lp::StringNode((yyvsp[0].stringvariable));
   		 }
-#line 2064 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2060 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 576 "interpreter.y" /* yacc.c:1646  */
+#line 566 "interpreter.y" /* yacc.c:1646  */
     {
 			// Get the identifier in the table of symbols as Builtin
 			lp::Builtin *f= (lp::Builtin *) table.getSymbol((yyvsp[-3].identifier));
@@ -2110,121 +2106,121 @@ yyreduce:
 			else
 	  			 execerror("Syntax error: incompatible number of parameters for function", (yyvsp[-3].identifier));
 		}
-#line 2114 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2110 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 623 "interpreter.y" /* yacc.c:1646  */
+#line 613 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "greater than" node
  			(yyval.expNode) = new lp::GreaterThanNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2123 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2119 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 629 "interpreter.y" /* yacc.c:1646  */
+#line 619 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "greater or equal" node
  			(yyval.expNode) = new lp::GreaterOrEqualNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2132 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2128 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 635 "interpreter.y" /* yacc.c:1646  */
+#line 625 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "less than" node
  			(yyval.expNode) = new lp::LessThanNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2141 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2137 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 641 "interpreter.y" /* yacc.c:1646  */
+#line 631 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "less or equal" node
  			(yyval.expNode) = new lp::LessOrEqualNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2150 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2146 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 647 "interpreter.y" /* yacc.c:1646  */
+#line 637 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "equal" node
  			(yyval.expNode) = new lp::EqualNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2159 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2155 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 653 "interpreter.y" /* yacc.c:1646  */
+#line 643 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "not equal" node
  			(yyval.expNode) = new lp::NotEqualNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2168 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2164 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 659 "interpreter.y" /* yacc.c:1646  */
+#line 649 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "logic and" node
  			(yyval.expNode) = new lp::AndNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2177 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2173 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 665 "interpreter.y" /* yacc.c:1646  */
+#line 655 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "logic or" node
  			(yyval.expNode) = new lp::OrNode((yyvsp[-2].expNode),(yyvsp[0].expNode));
 		}
-#line 2186 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2182 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 671 "interpreter.y" /* yacc.c:1646  */
+#line 661 "interpreter.y" /* yacc.c:1646  */
     {
 		  // Create a new "logic negation" node
  			(yyval.expNode) = new lp::NotNode((yyvsp[0].expNode));
 		}
-#line 2195 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2191 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 680 "interpreter.y" /* yacc.c:1646  */
+#line 670 "interpreter.y" /* yacc.c:1646  */
     {
 			    // Create a new list STL
 				(yyval.parameters) = new std::list<lp::ExpNode *>();
 			}
-#line 2204 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2200 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 686 "interpreter.y" /* yacc.c:1646  */
+#line 676 "interpreter.y" /* yacc.c:1646  */
     {
 				(yyval.parameters) = (yyvsp[0].parameters);
 
 				// Insert the expression in the list of expressions
 				(yyval.parameters)->push_front((yyvsp[-1].expNode));
 			}
-#line 2215 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2211 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 696 "interpreter.y" /* yacc.c:1646  */
+#line 686 "interpreter.y" /* yacc.c:1646  */
     {
 			    // Create a new list STL
 				(yyval.parameters) = new std::list<lp::ExpNode *>();
 			}
-#line 2224 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2220 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 702 "interpreter.y" /* yacc.c:1646  */
+#line 692 "interpreter.y" /* yacc.c:1646  */
     {
 				// Get the list of expressions
 				(yyval.parameters) = (yyvsp[0].parameters);
@@ -2232,11 +2228,11 @@ yyreduce:
 				// Insert the expression in the list of expressions
 				(yyval.parameters)->push_front((yyvsp[-1].expNode));
 			}
-#line 2236 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2232 "interpreter.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2240 "interpreter.tab.c" /* yacc.c:1646  */
+#line 2236 "interpreter.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2464,5 +2460,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 713 "interpreter.y" /* yacc.c:1906  */
+#line 703 "interpreter.y" /* yacc.c:1906  */
 

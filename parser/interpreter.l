@@ -6,7 +6,6 @@
 #include <iostream>
 
 /*********************/
-/* NEW in example 4 */
 /* atof */
 #include <stdlib.h>
 /*********************/
@@ -16,7 +15,6 @@
 
 /*********************/
 /*
-  NEW in example 16
   AST class
   IMPORTANT: must be written before interpreter.tab.h
 */
@@ -27,13 +25,11 @@
 #include "interpreter.tab.h"
 
 /********************/
-/* NEW in example 3 */
 #include "../error/error.hpp"
 /********************/
 
 
 /*********************************************/
-/* NEW in example 7 */
 /* Table of symbols */
 #include "../table/table.hpp"
 
@@ -160,7 +156,7 @@ concatenacion (||)
 		}
 
 {numero1}|{numero2}|{numero3}  {
-					  /* MODIFIED in example 4 */
+					
 					  /* Conversion of type and sending of the numerical value to the parser */
 					   yylval.number = atof(yytext);
 
@@ -194,7 +190,7 @@ lugar (?i:_lugar)W in example 7 */
 								return VAR;
 							}
 
-						/* MODIFIED in example 11 */
+						
 						/*
 							If the identifier is in the table of symbols then its token is returned
 								The identifier can be a variable or a numeric constant
@@ -266,8 +262,8 @@ lugar (?i:_lugar)W in example 7 */
    return DISTINTO;
 }
 
-"("     { return LPAREN; } 			/* NEW in example 3 */
-")"	    { return RPAREN; } 			/* NEW in example 3 */
+"("     { return LPAREN; } 			
+")"	    { return RPAREN; } 			
 
 "++" {
    return INCREMENTO;
@@ -303,16 +299,16 @@ lugar (?i:_lugar)W in example 7 */
 
 "**"      {return POTENCIA;}
 
-":=" 	{ return ASIGNACION; }		/* NEW in example 7 */
+":=" 	{ return ASIGNACION; }		
 
-"!="	{ return DISTINTO; }		/* NEW in example 15 */
+"!="	{ return DISTINTO; }		
 
 
-"&&"	{ return Y_LOGICO; }				/* NEW in example 15 */
+"&&"	{ return Y_LOGICO; }				
 
-"{"		{ return LETFCURLYBRACKET; } 	/* NEW in example 17 */
+"{"		{ return LETFCURLYBRACKET; } 	
 
-"}"		{ return RIGHTCURLYBRACKET; }	/* NEW in example 17 */
+"}"		{ return RIGHTCURLYBRACKET; }	
 
 {STRING}        {
 			for(int i = 0; yytext[i] != '\0'; i++)
@@ -376,7 +372,6 @@ lugar (?i:_lugar)W in example 7 */
 
 .								{
 									/* Any other character */
-									/* MODIFIIED in example 3 */
 									/* Change to error state */
 									BEGIN(ERROR);
 
@@ -387,8 +382,8 @@ lugar (?i:_lugar)W in example 7 */
 									yymore();
 								}
 
-<ERROR>[^0-9+\-*/()\^% \t\n\;a-zA-Z=<>!&]	{ /* MODIFIED in examples 5, 7, 15 */
-								  /* NEW in example 3 */
+<ERROR>[^0-9+\-*/()\^% \t\n\;a-zA-Z=<>!&]	{ 
+								  
 								  /*
 									The current value of yytext
 									will be concatenated with the next character
@@ -397,7 +392,7 @@ lugar (?i:_lugar)W in example 7 */
 								}
 
 <ERROR>(.|\n)                {
-								/* NEW in example 3 */
+								
 								/* Rewind one position */
 								yyless(yyleng-1);
 

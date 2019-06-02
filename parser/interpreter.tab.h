@@ -116,19 +116,19 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 135 "interpreter.y" /* yacc.c:1909  */
+#line 131 "interpreter.y" /* yacc.c:1909  */
 
-  char * identifier; 				 /* NEW in example 7 */
+  char * identifier; 				 
   double number;
-  bool logic;						 /* NEW in example 15 */
+  bool logic;						 
 
   std::string *stringvariable;
 
-  lp::ExpNode *expNode;  			 /* NEW in example 16 */
-  std::list<lp::ExpNode *>  *parameters;    // New in example 16; NOTE: #include<list> must be in interpreter.l, init.cpp, interpreter.cpp
-  std::list<lp::Statement *> *stmts; /* NEW in example 16 */
-  lp::Statement *st;				 /* NEW in example 16 */
-  lp::AST *prog;					 /* NEW in example 16 */
+  lp::ExpNode *expNode;  			 
+  std::list<lp::ExpNode *>  *parameters;   
+  std::list<lp::Statement *> *stmts; 
+  lp::Statement *st;				 
+  lp::AST *prog;					 
 
 #line 134 "interpreter.tab.h" /* yacc.c:1909  */
 };
